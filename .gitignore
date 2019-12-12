@@ -83,3 +83,16 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+/.idea
+将删除 app/
+将删除 build.gradle
+将删除 gradle.properties
+将删除 gradle/
+将删除 gradlew
+将删除 gradlew.bat
+将删除 settings.gradle
+/gradle.properties
+/gradlew
+/gradlew.bat
+/gradle/
