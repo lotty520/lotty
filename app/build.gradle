@@ -1,4 +1,4 @@
- apply plugin: 'com.android.application'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
@@ -29,4 +29,5 @@ dependencies {
 
     implementation project(':algorithm')
     implementation project(':hook')
+    implementation project(':component')
 }

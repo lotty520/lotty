@@ -38,6 +38,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="HOOK" />
+
+            <Button
+                android:id="@+id/component"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="组件" />
         </LinearLayout>
     </ScrollView>
 
