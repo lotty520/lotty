@@ -107,11 +107,11 @@ public class SwipeLayout extends LinearLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Log.e("wh", "down");
+            Log.e("wh", "down:" + isRefreshing);
             isPulling = true;
             endY = startY = (int) event.getRawY();
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            Log.e("wh", "up");
+            Log.e("wh", "up:" + isRefreshing);
             isPulling = false;
             if (headerScrolledDistance == -MAX_HEADER_SIZE && !isRefreshing) {
                 isRefreshing = true;
@@ -126,7 +126,7 @@ public class SwipeLayout extends LinearLayout {
                 headerScrolledDistance = getScrollY();
                 endY = (int) event.getRawY();
                 int deltaY = endY - startY;
-                if (deltaY > MIN_SWIPE_DIS) {
+                if (Math.abs(deltaY) > MIN_SWIPE_DIS) {
                     // 在起点位置下方
                     if (deltaY > 0) {
                         if (deltaY < MAX_HEADER_SIZE) {
@@ -156,6 +156,7 @@ public class SwipeLayout extends LinearLayout {
     }
 
     private void smoothScrollToTop() {
+        isBacking = true;
         scroller.startScroll(0, getScrollY(), 0, -getScrollY(), 1000);
         invalidate();
     }
@@ -164,12 +165,12 @@ public class SwipeLayout extends LinearLayout {
     public void computeScroll() {
         if (!isPulling && isBacking && scroller.computeScrollOffset()) {
             scrollTo(0, scroller.getCurrY());
-            if (getScrollY() == 0) {
-                isBacking = false;
-                isRefreshing = false;
-            }
             Log.e("wh", "computeScroll");
             postInvalidate();
+        }
+        if (getScrollY() == 0) {
+            isBacking = false;
+            isRefreshing = false;
         }
     }
 

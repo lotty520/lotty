@@ -52,6 +52,12 @@ public class SwipeActivity extends AppCompatActivity implements View.OnClickList
     private SwipeLayout.SwipeListener swipeListener = new SwipeLayout.SwipeListener() {
         @Override
         public void onRefreshing() {
+            swipeLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    swipeLayout.notifySwipeFinished();
+                }
+            },1500);
             Log.e("wh", "onRefreshing");
         }
     };
