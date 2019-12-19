@@ -16,37 +16,81 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.component.ptr.DefaultHeaderView;
+import com.github.component.ptr.HeaderView;
+
 /**
  * @author lotty
  */
 public class SwipeLayout extends LinearLayout {
 
-    private final static int MAX_HEADER_SIZE = 400;
+    private final static int MAX_HEADER_SIZE = 600;
+    private final static int MAX_LOADING_OFFSET = 400;
     private final static int MAX_FOOTER_SIZE = 200;
-    private final static int MIN_SWIPE_DIS = 10;
+    private final static int MIN_SLOT = 10;
+
+    private final static int SCROLL_DURATION = 1000;
+
+    /**
+     * 初始状态
+     */
+    private final static int STATE_INIT = 1;
+    /**
+     * 向下滑动中，且滑动距离小于{@link MAX_LOADING_OFFSET}
+     */
+    private final static int STATE_PULLING_DOWN = 2;
+    /**
+     * 向下滑动中，且滑动距离介于{@link MAX_LOADING_OFFSET,MAX_HEADER_SIZE}之间
+     */
+    private final static int STATE_PULLING_DOWN_EXTRA = 3;
+    /**
+     * 滑动距离等于{@link MAX_LOADING_OFFSET}且悬停
+     */
+    private final static int STATE_PULLING_LOADING = 4;
+    /**
+     * 向上滑动中，且滑动距离小于{@link MAX_LOADING_OFFSET}
+     */
+    private final static int STATE_PULLING_UP = 5;
+    /**
+     * 向上滑动中，且滑动距离介于{@link MAX_LOADING_OFFSET,MAX_HEADER_SIZE}之间
+     */
+    private final static int STATE_PULLING_UP_EXTRA = 6;
+    /**
+     * 滑动距离等于{@link MAX_HEADER_SIZE}且悬停
+     */
+    private final static int STATE_PULLING_MAX = 7;
+
+
     private FrameLayout body;
     private FrameLayout header;
     private FrameLayout footer;
+
     private RecyclerView mRecyclerView;
     private int startY;
     private int endY;
-    private boolean isBacking;
-    private int headerScrolledDistance;
-    private Scroller scroller = new Scroller(getContext());
+    private Scroller mScroller;
 
-    private boolean isPulling;
+    private HeaderView mHeaderView;
+
+    private boolean isTouching;
 
     private boolean isRefreshing;
+    private float lastY;
+    private int lastScrollY;
 
     private SwipeListener mListener;
+    /**
+     * 当前状态
+     */
+    private int mState = STATE_INIT;
 
     public SwipeLayout(Context context) {
         super(context);
         setUp();
-
     }
 
     private void setUp() {
+        mScroller = new Scroller(getContext());
         setOrientation(LinearLayout.VERTICAL);
         header = new FrameLayout(getContext());
         LayoutParams headerLp = new LayoutParams(LayoutParams.MATCH_PARENT, MAX_HEADER_SIZE);
@@ -54,25 +98,40 @@ public class SwipeLayout extends LinearLayout {
         header.setLayoutParams(headerLp);
         header.setClickable(false);
 
+
         body = new FrameLayout(getContext());
         LayoutParams bodyLp = new LayoutParams(LayoutParams.MATCH_PARENT, 0);
         bodyLp.weight = 1;
         body.setLayoutParams(bodyLp);
-        mRecyclerView = new RecyclerView(getContext());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        body.addView(mRecyclerView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         footer = new FrameLayout(getContext());
         LayoutParams footerLp = new LayoutParams(LayoutParams.MATCH_PARENT, MAX_FOOTER_SIZE);
         footer.setLayoutParams(footerLp);
-        footer.setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
+        footer.setClickable(false);
+
+        init();
         fill();
+    }
+
+    private void init() {
+        // header
+        setHeader(new DefaultHeaderView(getContext()));
+        // body
+        mRecyclerView = new RecyclerView(getContext());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        body.addView(mRecyclerView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     private void fill() {
         addView(header, 0);
         addView(body, 1);
         addView(footer, 2);
+    }
+
+    public void setHeader(HeaderView view) {
+        mHeaderView = view;
+        header.removeAllViews();
+        header.addView(view.getView(), new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     public SwipeLayout(Context context, @Nullable AttributeSet attrs) {
@@ -97,7 +156,7 @@ public class SwipeLayout extends LinearLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // 修改控件的高度，将Footer隐藏
+        // 修改控件的高度，将Footer隐藏到屏幕底部
         int mode = MeasureSpec.getMode(heightMeasureSpec);
         int size = MeasureSpec.getSize(heightMeasureSpec);
         int measureSpec = MeasureSpec.makeMeasureSpec(size + MAX_FOOTER_SIZE, mode);
@@ -106,46 +165,74 @@ public class SwipeLayout extends LinearLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
+        int scrollPix = getScrollY();
+        float rawY = event.getRawY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Log.e("wh", "down:" + isRefreshing);
-            isPulling = true;
-            endY = startY = (int) event.getRawY();
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            Log.e("wh", "up:" + isRefreshing);
-            isPulling = false;
-            if (headerScrolledDistance == -MAX_HEADER_SIZE && !isRefreshing) {
-                isRefreshing = true;
-                refreshing();
+            isTouching = true;
+            if (mState == STATE_INIT) {
+                endY = startY = Math.round(rawY);
             }
-            if (!isRefreshing) {
-                smoothScrollToTop();
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            isTouching = false;
+            if (mState == STATE_PULLING_DOWN || mState == STATE_PULLING_UP) {
+                smoothScroll(scrollPix, 0, SCROLL_DURATION);
+            } else if (mState == STATE_PULLING_LOADING) {
+                mHeaderView.onRefreshStart();
+                isRefreshing = true;
+            } else if (mState == STATE_PULLING_DOWN_EXTRA || mState == STATE_PULLING_UP_EXTRA || mState == STATE_PULLING_MAX) {
+                smoothScroll(scrollPix, -MAX_LOADING_OFFSET, SCROLL_DURATION);
             }
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            Log.e("wh", "move:" + isRefreshing);
-            if (!isRefreshing) {
-                headerScrolledDistance = getScrollY();
-                endY = (int) event.getRawY();
-                int deltaY = endY - startY;
-                if (Math.abs(deltaY) > MIN_SWIPE_DIS) {
-                    // 在起点位置下方
-                    if (deltaY > 0) {
-                        if (deltaY < MAX_HEADER_SIZE) {
-                            scrollTo(0, -deltaY);
-                        } else {
-                            if (headerScrolledDistance > -MAX_HEADER_SIZE) {
-                                // 强制滑动到最大距离
-                                scrollTo(0, -MAX_HEADER_SIZE);
-                            }
-                        }
+            updateState(scrollPix, rawY - lastY > 0);
+            endY = Math.round(rawY);
+            int deltaY = endY - startY;
+            int absDeltaY = Math.abs(deltaY);
+            // 大于最小滑动识别单位
+            if (absDeltaY > MIN_SLOT) {
+                // 在起点位置下方
+                if (deltaY > 0) {
+                    if (absDeltaY < MAX_HEADER_SIZE) {
+                        scrollTo(0, -deltaY);
                     } else {
-                        if (headerScrolledDistance < 0) {
-                            scrollTo(0, 0);
+                        if (scrollPix > -MAX_HEADER_SIZE) {
+                            // 强制滑动到最大距离
+                            scrollTo(0, -MAX_HEADER_SIZE);
                         }
+                    }
+                } else {
+                    if (scrollPix < 0) {
+                        scrollTo(0, 0);
                     }
                 }
             }
+        } else if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+            isTouching = false;
         }
+        lastY = rawY;
         return super.dispatchTouchEvent(event);
+    }
+
+    private void updateState(int scrollY, boolean down) {
+        int realY = Math.abs(scrollY);
+        if (realY <= 0) {
+            mState = STATE_INIT;
+        } else if (realY < MAX_LOADING_OFFSET) {
+            if (down) {
+                mState = STATE_PULLING_DOWN;
+            } else {
+                mState = STATE_PULLING_UP;
+            }
+        } else if (realY == MAX_LOADING_OFFSET) {
+            mState = STATE_PULLING_LOADING;
+        } else if (realY < MAX_HEADER_SIZE) {
+            if (down) {
+                mState = STATE_PULLING_DOWN_EXTRA;
+            } else {
+                mState = STATE_PULLING_UP_EXTRA;
+            }
+        } else {
+            mState = STATE_PULLING_MAX;
+        }
     }
 
     private void refreshing() {
@@ -155,27 +242,35 @@ public class SwipeLayout extends LinearLayout {
         }
     }
 
-    private void smoothScrollToTop() {
-        isBacking = true;
-        scroller.startScroll(0, getScrollY(), 0, -getScrollY(), 1000);
-        invalidate();
-    }
-
     @Override
     public void computeScroll() {
-        if (!isPulling && isBacking && scroller.computeScrollOffset()) {
-            scrollTo(0, scroller.getCurrY());
-            Log.e("wh", "computeScroll");
-            postInvalidate();
-        }
-        if (getScrollY() == 0) {
-            isBacking = false;
+        int scrollY = getScrollY();
+        if (scrollY > -MAX_LOADING_OFFSET) {
             isRefreshing = false;
         }
-    }
-
-    public void setHeader(View view) {
-        header.addView(view, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        if (scrollY < lastScrollY) {
+            if (scrollY < -MAX_LOADING_OFFSET && mState == STATE_PULLING_DOWN) {
+                mHeaderView.onReadyToStart();
+            }
+            updateState(scrollY, true);
+        } else {
+            if (scrollY > -MAX_LOADING_OFFSET && (mState == STATE_PULLING_UP_EXTRA || mState == STATE_PULLING_LOADING)) {
+                mHeaderView.onReadyToFinish();
+            }
+            updateState(scrollY, false);
+        }
+        //回弹到指定位置
+        if (!isTouching && !isRefreshing && mScroller.computeScrollOffset()) {
+            int currY = mScroller.getCurrY();
+            Log.e("wh", "------>" + currY);
+            scrollTo(0, currY);
+            postInvalidate();
+        }
+        if (!isTouching && !isRefreshing && mState == STATE_PULLING_LOADING && mScroller.isFinished()) {
+            mHeaderView.onRefreshStart();
+            isRefreshing = true;
+        }
+        lastScrollY = scrollY;
     }
 
     public RecyclerView getBody() {
@@ -188,11 +283,40 @@ public class SwipeLayout extends LinearLayout {
     }
 
     public void notifySwipeFinished() {
+        Log.e("wh", "notifySwipeFinished");
         if (isRefreshing) {
-            isBacking = true;
+            isRefreshing = false;
             smoothScrollToTop();
-            Log.e("wh", "notifySwipeFinished");
         }
+    }
+
+    public void notifySwipeStarted() {
+        Log.e("wh", "notifySwipeStarted");
+        if (!isRefreshing) {
+            smoothScrollToRefresh();
+        }
+    }
+
+
+    /**
+     * @param start    当前位置的scrollY
+     * @param end      目的位置的scrollY
+     * @param duration 时长
+     */
+    private void smoothScroll(int start, int end, int duration) {
+        int dis = end - start;
+        mScroller.startScroll(0, start, 0, dis, duration);
+        invalidate();
+    }
+
+    private void smoothScrollToTop() {
+        mScroller.startScroll(0, getScrollY(), 0, MAX_LOADING_OFFSET, 1000);
+        invalidate();
+    }
+
+    private void smoothScrollToRefresh() {
+        mScroller.startScroll(0, 0, 0, -MAX_LOADING_OFFSET, 1000);
+        invalidate();
     }
 
 

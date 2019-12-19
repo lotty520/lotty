@@ -57,7 +57,7 @@ public class SwipeActivity extends AppCompatActivity implements View.OnClickList
                 public void run() {
                     swipeLayout.notifySwipeFinished();
                 }
-            },1500);
+            }, 1500);
             Log.e("wh", "onRefreshing");
         }
     };
@@ -70,8 +70,6 @@ public class SwipeActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.start).setOnClickListener(this);
         findViewById(R.id.finish).setOnClickListener(this);
         swipeLayout.setSwipeListener(swipeListener);
-        View header = View.inflate(this, R.layout.header_layout, null);
-        swipeLayout.setHeader(header);
         SwipeAdapter adapter = new SwipeAdapter(this);
         androidx.recyclerview.widget.RecyclerView body = swipeLayout.getBody();
         body.setAdapter(adapter);
@@ -83,7 +81,7 @@ public class SwipeActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start:
-                // TODO: 2019-12-17
+                swipeLayout.notifySwipeStarted();
                 break;
             case R.id.finish:
                 swipeLayout.notifySwipeFinished();
