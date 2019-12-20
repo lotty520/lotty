@@ -2,10 +2,12 @@ package com.github.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.github.hook.WifiManagerHooker;
 
 public class HookLifecycleMonitor implements Application.ActivityLifecycleCallbacks {
 
@@ -18,6 +20,7 @@ public class HookLifecycleMonitor implements Application.ActivityLifecycleCallba
 
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+        WifiManagerHooker.hook(activity.getBaseContext());
     }
 
     @Override

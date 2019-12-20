@@ -44,6 +44,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="组件" />
+
+            <Button
+                android:id="@+id/dispatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="事件分发" />
         </LinearLayout>
     </ScrollView>
 

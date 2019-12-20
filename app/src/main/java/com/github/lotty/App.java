@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.github.hook.RootHooker;
 
+/**
+ * @author lotty
+ */
 public class App extends Application {
 
     @Override

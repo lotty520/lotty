@@ -51,8 +51,13 @@ public class DefaultHeaderView implements HeaderView {
     @Override
     public void onReadyToFinish() {
         Log.e("wh", "onReadyToFinish");
+        if (mAnimator.isRunning()){
+            mAnimator.end();
+        }
         hint.setText("下拉刷新");
         content.setImageResource(R.drawable.ptr_header_down);
+
+
     }
 
     @Override
@@ -70,7 +75,9 @@ public class DefaultHeaderView implements HeaderView {
     @Override
     public void onRefreshFinish() {
         Log.e("wh", "onRefreshFinish");
-        mAnimator.end();
+        if (mAnimator.isRunning()){
+            mAnimator.end();
+        }
     }
 
     @Override
