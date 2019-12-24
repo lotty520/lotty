@@ -12,9 +12,7 @@ public interface HeaderView {
      */
     void onReadyToFinish();
 
-    void onRefreshStart();
-
-    void onRefreshFinish();
+    void onStart();
 
     /**
      * 滑动距离达到最小刷新距离，即将进入，提示松手刷新
