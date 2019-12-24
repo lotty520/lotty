@@ -52,10 +52,7 @@ public class WifiManagerHooker {
 
     @Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
       Log.e("wh", "method invoke " + method.getName());
-      if (method.getName().endsWith("getWifiEnabledState")) {
-        Log.e("wh", "method invoke.");
-        return 909;
-      }
+      // TODO: 2019-12-23 real logic
       return method.invoke(real, args);
     }
   }

@@ -36,19 +36,19 @@ public class DispatchViewGroup extends FrameLayout {
 
   @Override
   public boolean dispatchTouchEvent(MotionEvent ev) {
-    Log.e("wh", "ViewGroup:dispatchTouchEvent");
+    Log.e("wh", "ViewGroup:dispatchTouchEvent:" + ActionUtil.action(ev.getAction()));
     return super.dispatchTouchEvent(ev);
   }
 
   @Override
   public boolean onInterceptTouchEvent(MotionEvent ev) {
-    Log.e("wh", "ViewGroup:onInterceptTouchEvent");
+    Log.e("wh", "ViewGroup:onInterceptTouchEvent:" + ActionUtil.action(ev.getAction()));
     return super.onInterceptTouchEvent(ev);
   }
 
   @Override
   public boolean onTouchEvent(MotionEvent event) {
-    Log.e("wh", "ViewGroup:onTouchEvent");
-    return true;
+    Log.e("wh", "ViewGroup:onTouchEvent:" + ActionUtil.action(event.getAction()));
+    return super.onTouchEvent(event);
   }
 }

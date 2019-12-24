@@ -6,6 +6,7 @@ import android.util.Log;
 import java.lang.reflect.Method;
 
 /**
+ * Copy from wweishu Maybe did not work in the future
  * @author lotty
  */
 public class Reflection {
