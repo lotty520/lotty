@@ -361,14 +361,18 @@ public class SwipeLayout extends ViewGroup {
     }
   }
 
+  /**
+   * 待解决问题：滑动后，body接收到点击事件时，真实的点击位置跟ITEMd的位置不匹配。是由于BODY滑动后位置发生改变
+   * 解决办法：刷新中，禁止点击
+   * @param event
+   */
   private void dispatchEventToBody(MotionEvent event) {
-    float evX = event.getX();
-    float evY = event.getY();
+    float evX = event.getRawX();
+    float evY = event.getRawY();
     int[] location = new int[2];
     body.getLocationOnScreen(location);
     float x = location[0];
     float y = location[1];
-    Log.e("body", "x= " + x + ", y= " + y);
     if (evX >= x && evX <= (x + body.getWidth()) && evY > y && evY < (y + body.getHeight())) {
       body.dispatchTouchEvent(event);
     }
