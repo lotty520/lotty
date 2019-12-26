@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".HookActivity"
     >
 
   <ScrollView
@@ -25,35 +25,23 @@
         >
 
       <Button
-          android:id="@+id/grant"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="申请权限"
-          />
-
-      <Button
-          android:id="@+id/algorithm"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="算法"
-          />
-
-      <Button
-          android:id="@+id/hook"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Hook"
           android:textAllCaps="false"
+          android:id="@+id/hook_wifi"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="WifiManager"
           />
 
       <Button
-          android:id="@+id/component"
+          android:textAllCaps="false"
+          android:id="@+id/hook_ams"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="组件"
+          android:text="Ams"
           />
 
     </LinearLayout>
   </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

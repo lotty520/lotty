@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class DispatchActivtiy extends AppCompatActivity {
+public class DispatchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

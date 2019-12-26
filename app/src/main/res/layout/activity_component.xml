@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ComponentActivity"
     >
-
   <ScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -25,32 +24,24 @@
         >
 
       <Button
-          android:id="@+id/grant"
+          android:id="@+id/component_swipe"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="申请权限"
+          android:text="下拉刷新"
           />
 
       <Button
-          android:id="@+id/algorithm"
+          android:id="@+id/component_image"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="算法"
+          android:text="图片"
           />
 
       <Button
-          android:id="@+id/hook"
+          android:id="@+id/component_dispatch"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Hook"
-          android:textAllCaps="false"
-          />
-
-      <Button
-          android:id="@+id/component"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="组件"
+          android:text="事件分发"
           />
 
     </LinearLayout>
