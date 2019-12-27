@@ -1,6 +1,5 @@
 package com.github.common;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 

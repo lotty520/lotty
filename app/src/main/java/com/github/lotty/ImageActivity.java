@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.github.component.GlsSurfaceView;
 import com.github.component.image.XImageView;
 
 public class ImageActivity extends AppCompatActivity implements SurfaceHolder.Callback {
@@ -29,7 +28,6 @@ public class ImageActivity extends AppCompatActivity implements SurfaceHolder.Ca
     }
     SurfaceView sv = findViewById(R.id.surface);
     sv.getHolder().addCallback(this);
-    GlsSurfaceView gsc = findViewById(R.id.gsc);
   }
 
   @Override public void surfaceCreated(SurfaceHolder holder) {

@@ -3,6 +3,7 @@ package com.github.component.image;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -33,6 +34,7 @@ public class XImageView extends View {
 
   public void setBitmap(Bitmap bitmap) {
     mBitmap = bitmap;
+    Drawable drawable = null;
     invalidate();
   }
 
