@@ -52,6 +52,13 @@
           android:layout_height="wrap_content"
           android:text="组件"
           />
+      <Button
+          android:id="@+id/drawable"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="drawable"
+          android:textAllCaps="false"
+          />
 
     </LinearLayout>
   </ScrollView>

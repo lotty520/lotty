@@ -17,7 +17,19 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
+    <!-- Drawable容器 -->
+    <activity android:name=".DrawableActivity">
+      <intent-filter>
+        <action android:name="com.github.lotty.action.NAVIGATION" />
 
+        <category android:name="android.intent.category.DEFAULT" />
+
+        <data
+            android:host="nav.github.com"
+            android:path="/lotty/drawable"
+            android:scheme="https" />
+      </intent-filter>
+    </activity>
     <!-- 组件容器 -->
     <activity android:name=".ComponentActivity">
       <intent-filter>
@@ -30,9 +42,7 @@
             android:path="/lotty/component"
             android:scheme="https" />
       </intent-filter>
-    </activity>
-
-    <!-- HOOK容器 -->
+    </activity> <!-- HOOK容器 -->
     <activity android:name=".HookActivity">
       <intent-filter>
         <action android:name="com.github.lotty.action.NAVIGATION" />
@@ -44,9 +54,7 @@
             android:path="/lotty/hook"
             android:scheme="https" />
       </intent-filter>
-    </activity>
-
-    <!-- 图片 -->
+    </activity> <!-- 图片 -->
     <activity android:name=".ImageActivity">
       <intent-filter>
         <action android:name="com.github.lotty.action.NAVIGATION" />
@@ -59,7 +67,6 @@
             android:scheme="https" />
       </intent-filter>
     </activity>
-
     <!-- 事件 -->
     <activity android:name=".DispatchActivity">
       <intent-filter>
@@ -73,7 +80,6 @@
             android:scheme="https" />
       </intent-filter>
     </activity>
-
     <!-- 刷新 -->
     <activity android:name=".SwipeActivity">
       <intent-filter>
@@ -87,8 +93,7 @@
             android:scheme="https" />
       </intent-filter>
     </activity>
-
-    <!--  主页面  -->
+    <!-- 主页面 -->
     <activity android:name=".MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

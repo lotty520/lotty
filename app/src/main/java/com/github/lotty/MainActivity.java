@@ -1,7 +1,5 @@
 package com.github.lotty;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     findViewById(R.id.hook).setOnClickListener(this);
     findViewById(R.id.grant).setOnClickListener(this);
     findViewById(R.id.component).setOnClickListener(this);
+    findViewById(R.id.drawable).setOnClickListener(this);
   }
 
   @Override
@@ -35,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         break;
       case R.id.hook:
         Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/hook")).go();
+        break;
+      case R.id.drawable:
+        Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/drawable")).go();
         break;
       default:
         break;

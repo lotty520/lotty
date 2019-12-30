@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'encryption'
-
-stringExt {
-  encType = "base64"
-  include = ["com.github.box"]
-  exclude = ["androidx"]
-}
+//apply plugin: 'encryption'
+//
+//stringExt {
+//  encType = "base64"
+//  include = ["com.github.box"]
+//  exclude = ["androidx"]
+//}
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"

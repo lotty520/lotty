@@ -3,13 +3,17 @@ package com.github.component.image;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+/**
+ * 直接绘制Bitmap
+ *
+ * @author lotty
+ */
 public class XImageView extends View {
 
   private Bitmap mBitmap;
@@ -34,14 +38,13 @@ public class XImageView extends View {
 
   public void setBitmap(Bitmap bitmap) {
     mBitmap = bitmap;
-    Drawable drawable = null;
     invalidate();
   }
 
   @Override protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
     if (mBitmap != null) {
-      canvas.drawBitmap(mBitmap, getLeft(), getTop(), null);
+      canvas.drawBitmap(mBitmap, 0, 0, null);
     }
   }
 }
