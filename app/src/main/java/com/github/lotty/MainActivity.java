@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     findViewById(R.id.grant).setOnClickListener(this);
     findViewById(R.id.component).setOnClickListener(this);
     findViewById(R.id.drawable).setOnClickListener(this);
+    findViewById(R.id.animation).setOnClickListener(this);
   }
 
   @Override
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         break;
       case R.id.drawable:
         Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/drawable")).go();
+        break;
+      case R.id.animation:
+        Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/animation")).go();
         break;
       default:
         break;
