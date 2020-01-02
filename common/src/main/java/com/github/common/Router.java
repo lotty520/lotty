@@ -91,6 +91,7 @@ public class Router {
   }
 
   private void startByContext(Intent intent) {
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     mFrom.startActivity(intent, mOptions);
   }
 
