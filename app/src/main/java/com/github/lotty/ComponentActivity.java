@@ -2,6 +2,7 @@ package com.github.lotty;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.github.common.Router;
@@ -15,6 +16,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     findViewById(R.id.component_swipe).setOnClickListener(this);
     findViewById(R.id.component_image).setOnClickListener(this);
     findViewById(R.id.component_dispatch).setOnClickListener(this);
+
   }
 
   @Override public void onClick(View v) {

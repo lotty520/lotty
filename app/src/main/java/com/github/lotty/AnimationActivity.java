@@ -2,7 +2,10 @@ package com.github.lotty;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
+import android.widget.ListView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AnimationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,5 +32,13 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
       default:
         break;
     }
+  }
+
+  @Override protected void onSaveInstanceState(@NonNull Bundle outState) {
+    super.onSaveInstanceState(outState);
+  }
+
+  @Override protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
   }
 }
