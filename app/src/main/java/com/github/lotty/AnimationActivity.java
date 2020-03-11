@@ -2,9 +2,7 @@ package com.github.lotty;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
-import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
