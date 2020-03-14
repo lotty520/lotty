@@ -2,7 +2,6 @@ package com.github.lotty;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.github.common.Router;
@@ -16,7 +15,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     findViewById(R.id.component_swipe).setOnClickListener(this);
     findViewById(R.id.component_image).setOnClickListener(this);
     findViewById(R.id.component_dispatch).setOnClickListener(this);
-
+    findViewById(R.id.component_clock).setOnClickListener(this);
   }
 
   @Override public void onClick(View v) {
@@ -29,6 +28,9 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         break;
       case R.id.component_dispatch:
         Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/dispatch")).go();
+        break;
+      case R.id.component_clock:
+        Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/clock")).go();
         break;
       default:
         break;

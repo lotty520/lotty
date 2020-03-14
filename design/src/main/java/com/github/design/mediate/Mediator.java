@@ -1,5 +1,8 @@
 package com.github.design.mediate;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 抽象者具体实现
  */
@@ -27,6 +30,9 @@ public class Mediator extends AbstractMediator {
     if (customer == seller) {
       purchaser.search();
       purchaser.buy();
+
+      Set set = new HashSet();
+      set.iterator();
     } else if (customer == purchaser) {
       if (purchaser.getPrice() >= seller.getLowestPrice()) {
         seller.sell(purchaser.getPrice());

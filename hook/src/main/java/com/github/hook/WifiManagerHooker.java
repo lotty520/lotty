@@ -31,7 +31,6 @@ public class WifiManagerHooker {
 
       // real wifi
       WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-
       Object realIwm = serviceField.get(wifi);
       serviceField.set(wifi,
           Proxy.newProxyInstance(iWifiManager.getClassLoader(), new Class[] { iWifiManager },

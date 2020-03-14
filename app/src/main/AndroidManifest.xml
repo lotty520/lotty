@@ -17,6 +17,21 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
+    <activity android:name=".ClockAvtivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+
+        <!--        <action android:name="com.github.lotty.action.NAVIGATION" />-->
+        <!--        <category android:name="android.intent.category.DEFAULT" />-->
+        <!--        <data-->
+        <!--            android:host="nav.github.com"-->
+        <!--            android:path="/lotty/clock"-->
+        <!--            android:scheme="https" />-->
+      </intent-filter>
+    </activity>
     <!-- Animation容器 -->
     <activity android:name=".AnimationActivity">
       <intent-filter>
@@ -29,8 +44,7 @@
             android:path="/lotty/animation"
             android:scheme="https" />
       </intent-filter>
-    </activity>
-    <!-- Drawable容器 -->
+    </activity> <!-- Drawable容器 -->
     <activity android:name=".DrawableActivity">
       <intent-filter>
         <action android:name="com.github.lotty.action.NAVIGATION" />
@@ -102,14 +116,15 @@
             android:path="/lotty/swipe"
             android:scheme="https" />
       </intent-filter>
-    </activity> <!-- 主页面 -->
+    </activity>
+    <!-- 主页面 -->
     <activity android:name=".MainActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <action android:name="android.intent.action.VIEW" />
+      <!--      <intent-filter>-->
+      <!--        <action android:name="android.intent.action.MAIN" />-->
+      <!--        <action android:name="android.intent.action.VIEW" />-->
 
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
+      <!--        <category android:name="android.intent.category.LAUNCHER" />-->
+      <!--      </intent-filter>-->
     </activity>
   </application>
 

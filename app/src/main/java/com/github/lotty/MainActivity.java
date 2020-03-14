@@ -1,7 +1,10 @@
 package com.github.lotty;
 
+import android.content.Context;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +22,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     findViewById(R.id.component).setOnClickListener(this);
     findViewById(R.id.drawable).setOnClickListener(this);
     findViewById(R.id.animation).setOnClickListener(this);
+
+    WifiManager wifi = (WifiManager) MainActivity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    Log.e("wh", "MainActivity 中通过 getApplicationContext() 获取 WifiManager hash" + wifi.hashCode());
+
   }
 
   @Override
