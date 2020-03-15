@@ -152,4 +152,9 @@ public class ClockView extends View {
     mPointerPaint.setStrokeWidth(SECOND_STROKE);
     canvas.drawLine(mCenterX, mCenterY, endSecondX, endSecondY, mPointerPaint);
   }
+
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    removeCallbacks(runnable);
+  }
 }
