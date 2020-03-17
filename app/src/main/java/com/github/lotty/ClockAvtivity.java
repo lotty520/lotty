@@ -3,26 +3,43 @@ package com.github.lotty;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
-import com.github.component.poke.PokerView;
+import com.github.component.list.EdgeSlideView;
+import java.util.Arrays;
 
 public class ClockAvtivity extends AppCompatActivity implements View.OnClickListener {
 
-  private PokerView pokerView;
+  private static final String[] STRINGS = {
+      "A", "B", "C", "D", "E", "F", "G", "H"
+  };
+
+  private static final String[] STRINGS_EX = {
+      "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "#"
+  };
+
+  private EdgeSlideView slideView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_clock_avtivity);
     findViewById(R.id.component_deal).setOnClickListener(this);
+    findViewById(R.id.component_change).setOnClickListener(this);
+    findViewById(R.id.component_text_size).setOnClickListener(this);
 
-    pokerView = findViewById(R.id.component_poker);
+    slideView = findViewById(R.id.component_slide);
   }
 
   @Override public void onClick(View v) {
     int id = v.getId();
     switch (id) {
       case R.id.component_deal:
-        pokerView.deal((int) (Math.random() * 22 + 4));
+        slideView.setKeys(Arrays.asList(STRINGS_EX));
+        break;
+      case R.id.component_change:
+        slideView.setSelectPosition((int) (Math.random() * 8));
+        break;
+      case R.id.component_text_size:
+        slideView.setTextSize(48);
         break;
       default:
         break;

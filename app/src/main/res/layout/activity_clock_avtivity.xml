@@ -3,28 +3,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:layout_marginTop="10dp"
-    android:gravity="center_horizontal"
+    android:gravity="right"
     android:orientation="vertical"
     tools:context=".ClockAvtivity"
     >
+
 
   <Button
       android:id="@+id/component_deal"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginBottom="10dp"
-      android:text="发牌"
+      android:text="添加数据"
       />
+
+  <Button
+      android:id="@+id/component_change"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:text="改变位置"
+      />
+
+  <Button
+      android:id="@+id/component_text_size"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:text="改变字体大小"
+      />
+
+  <com.github.component.list.EdgeSlideView
+      android:id="@+id/component_slide"
+      android:layout_width="40dp"
+      android:layout_height="match_parent"
+      android:layout_marginTop="60dp"
+      android:layout_marginBottom="60dp"
+      />
+
+  <!--  <Button-->
+  <!--      android:id="@+id/component_deal"-->
+  <!--      android:layout_width="match_parent"-->
+  <!--      android:layout_height="wrap_content"-->
+  <!--      android:layout_marginBottom="10dp"-->
+  <!--      android:text="发牌"-->
+  <!--      />-->
+
+  <!--  <com.github.component.poke.PokerView-->
+  <!--      android:id="@+id/component_poker"-->
+  <!--      android:layout_width="match_parent"-->
+  <!--      android:layout_height="160dp"-->
+  <!--      />-->
+
+
   <!--  <com.github.component.clock.ClockView-->
   <!--      android:layout_width="200dp"-->
   <!--      android:layout_height="200dp"-->
   <!--      android:background="@color/colorAccent"-->
   <!--      />-->
-  <com.github.component.poke.PokerView
-      android:id="@+id/component_poker"
-      android:layout_width="match_parent"
-      android:layout_height="160dp"
-      />
 
 </LinearLayout>

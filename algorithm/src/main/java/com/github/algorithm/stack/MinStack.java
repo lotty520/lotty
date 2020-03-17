@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 可以快速检索最小值的栈
+ */
 class MinStack {
 
   /** initialize your data structure here. */

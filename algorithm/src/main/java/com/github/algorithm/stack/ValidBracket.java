@@ -2,6 +2,9 @@ package com.github.algorithm.stack;
 
 import java.util.Stack;
 
+/**
+ * 有效的括号问题
+ */
 public class ValidBracket {
 
 

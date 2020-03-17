@@ -2,6 +2,9 @@ package com.github.algorithm.stack;
 
 import java.util.Stack;
 
+/**
+ * 每日温度问题
+ */
 public class Temperatures {
 
   public int[] dailyTemperatures(int[] T) {
