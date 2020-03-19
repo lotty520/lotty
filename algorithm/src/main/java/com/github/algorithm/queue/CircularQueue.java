@@ -1,15 +1,13 @@
 package com.github.algorithm.queue;
 
 /**
- * 循环队列的实现
+ * 数组实现循环队列
  */
 class CircularQueue {
 
   private int head = -1;
   private int tail = -1;
-
   private int[] mQueue;
-
   private int size;
 
   /** Initialize your data structure here. Set the size of the queue to be k. */
@@ -18,6 +16,21 @@ class CircularQueue {
     head = -1;
     tail = -1;
     size = k;
+  }
+
+  public static void main(String[] args) {
+    CircularQueue circularQueue = new CircularQueue(6);
+    circularQueue.enQueue(6);
+    circularQueue.Rear();
+    circularQueue.Rear();
+    circularQueue.deQueue();
+    circularQueue.deQueue();
+    circularQueue.Rear();
+    circularQueue.deQueue();
+    circularQueue.Front();
+    circularQueue.deQueue();
+    circularQueue.deQueue();
+    circularQueue.deQueue();
   }
 
   /** Insert an element into the circular queue. Return true if the operation is successful. */

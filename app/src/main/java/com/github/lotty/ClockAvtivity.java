@@ -22,27 +22,27 @@ public class ClockAvtivity extends AppCompatActivity implements View.OnClickList
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_clock_avtivity);
-    findViewById(R.id.component_deal).setOnClickListener(this);
-    findViewById(R.id.component_change).setOnClickListener(this);
-    findViewById(R.id.component_text_size).setOnClickListener(this);
-
-    slideView = findViewById(R.id.component_slide);
+    //findViewById(R.id.component_deal).setOnClickListener(this);
+    //findViewById(R.id.component_change).setOnClickListener(this);
+    //findViewById(R.id.component_text_size).setOnClickListener(this);
+    //
+    //slideView = findViewById(R.id.component_slide);
   }
 
   @Override public void onClick(View v) {
-    int id = v.getId();
-    switch (id) {
-      case R.id.component_deal:
-        slideView.setKeys(Arrays.asList(STRINGS_EX));
-        break;
-      case R.id.component_change:
-        slideView.setSelectPosition((int) (Math.random() * 8));
-        break;
-      case R.id.component_text_size:
-        slideView.setTextSize(48);
-        break;
-      default:
-        break;
-    }
+    //int id = v.getId();
+    //switch (id) {
+    //  case R.id.component_deal:
+    //    slideView.setKeys(Arrays.asList(STRINGS_EX));
+    //    break;
+    //  case R.id.component_change:
+    //    slideView.setSelectPosition((int) (Math.random() * 8));
+    //    break;
+    //  case R.id.component_text_size:
+    //    slideView.setTextSize(48);
+    //    break;
+    //  default:
+    //    break;
+    //}
   }
 }
