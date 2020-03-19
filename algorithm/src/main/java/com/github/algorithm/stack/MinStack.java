@@ -5,9 +5,20 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 可以快速检索最小值的栈
+ * 设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。
+ *
+ * push(x) -- 将元素 x 推入栈中。
+ * pop() -- 删除栈顶的元素。
+ * top() -- 获取栈顶元素。
+ * getMin() -- 检索栈中的最小元素。
+ *
+ * 题解：利用动态数组可以实现
+ *
+ * 方式一：缓存最小值
+ *
+ * 方式二：最小值永远处于栈顶
  */
-class MinStack {
+public class MinStack {
 
   /** initialize your data structure here. */
 
@@ -53,12 +64,3 @@ class MinStack {
     return min;
   }
 }
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack obj = new MinStack();
- * obj.push(x);
- * obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.getMin();
- */

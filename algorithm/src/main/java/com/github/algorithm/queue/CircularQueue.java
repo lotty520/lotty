@@ -2,6 +2,8 @@ package com.github.algorithm.queue;
 
 /**
  * 数组实现循环队列
+ *
+ * 要点是控制收尾索引值
  */
 class CircularQueue {
 

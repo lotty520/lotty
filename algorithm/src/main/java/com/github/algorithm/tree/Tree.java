@@ -1,13 +1,14 @@
-package com.github.algorithm.stack;
+package com.github.algorithm.tree;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 二叉树的中序遍历：
+ *
+ * 递归实现
+ */
 public class Tree {
-
-  public static void main(String[] args) {
-    Tree tree = new Tree();
-  }
 
   public List<Integer> inorderTraversal(TreeNode root) {
     List<Integer> list = new ArrayList<>();

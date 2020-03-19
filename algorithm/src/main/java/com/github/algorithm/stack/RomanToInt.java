@@ -20,6 +20,8 @@ import java.util.Stack;
  * <p>特征</p>
  * <li>V、L、D、M不会入栈</li>
  * <li>遍历结束后，栈中只会存在I、X、C这三种</li>
+ *
+ * @author lotty
  */
 public class RomanToInt {
 

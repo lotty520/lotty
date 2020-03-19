@@ -3,15 +3,16 @@ package com.github.algorithm.array;
 import java.util.Arrays;
 
 /**
+ * 数组相关算法
  * @author lotty
  */
-public class ArrayAlgo {
+public class ArrayAlgorithm {
 
   public static void main(String[] args) {
-    ArrayAlgo arrayAlgo = new ArrayAlgo();
-    System.out.println(arrayAlgo.pivotIndex(new int[] { -1, -1, -1, 0, 1, 1 }));
-    System.out.println(arrayAlgo.dominantIndex(new int[] { 1, 0 }));
-    System.out.println(Arrays.toString(arrayAlgo.plusOne(new int[] { 9 })));
+    ArrayAlgorithm algorithm = new ArrayAlgorithm();
+    System.out.println(algorithm.pivotIndex(new int[] { -1, -1, -1, 0, 1, 1 }));
+    System.out.println(algorithm.dominantIndex(new int[] { 1, 0 }));
+    System.out.println(Arrays.toString(algorithm.plusOne(new int[] { 9 })));
   }
 
   /**
