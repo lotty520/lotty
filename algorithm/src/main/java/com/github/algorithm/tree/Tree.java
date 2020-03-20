@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 二叉树的中序遍历：
+ * 二叉树的前序遍历：
  *
  * 递归实现
  */
