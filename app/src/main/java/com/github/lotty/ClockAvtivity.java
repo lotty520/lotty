@@ -3,6 +3,7 @@ package com.github.lotty;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.github.component.list.EdgeSlideView;
 import java.util.Arrays;
 
@@ -27,6 +28,9 @@ public class ClockAvtivity extends AppCompatActivity implements View.OnClickList
     //findViewById(R.id.component_text_size).setOnClickListener(this);
     //
     //slideView = findViewById(R.id.component_slide);
+
+    LocalBroadcastManager instance = LocalBroadcastManager.getInstance(this);
+    instance.registerReceiver(null,null);
   }
 
   @Override public void onClick(View v) {

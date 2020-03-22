@@ -57,11 +57,15 @@ public class MutilArrayAlgorithm {
     MutilArrayAlgorithm maa = new MutilArrayAlgorithm();
     //int[] order = maa.findDiagonalOrder(DT);
     //System.out.println(Arrays.toString(order));
-    //System.out.println("############################");
+
     //List<Integer> integers = maa.spiralOrder(DT);r
     //System.out.println(integers.toString());
-    int i = maa.trailingZeroes(10);
-    System.out.println(" ----> " + i);
+
+    //int i = maa.trailingZeroes(10);
+    //System.out.println(" ----> " + i);
+
+    List<List<Integer>> generate = maa.generate(5);
+    System.out.println(generate.toString());
   }
 
   /**
@@ -209,28 +213,43 @@ public class MutilArrayAlgorithm {
   }
 
   /**
-   * 杨辉三角
-   */
-  public List<List<Integer>> generate(int numRows) {
-    List<List<Integer>> list = new ArrayList<>();
-    if (numRows == 0) {
-      return list;
-    }
-    if (numRows == 1) {
-      List<Integer> temp = new ArrayList<>(1);
-      temp.add(1);
+     * 杨辉三角
+     *
+     * 题解：
+     * 考虑特殊情况的第一行
+     * 然后按照规则计算每个位置的数值
+     *
+     * 需要注意的是：边界检查
+     */
+      public List<List<Integer>> generate(int numRows) {
+      List<List<Integer>> list = new ArrayList<>();
+
+      if (numRows == 0) {
+        return list;
+      }
+      List<Integer> lineOne = new ArrayList<>(1);
+      lineOne.add(1);
+      list.add(lineOne);
+
+      for (int i = 1; i < numRows; i++) {
+      List<Integer> integers = list.get(i - 1);
+      List<Integer> temp = new ArrayList<>(i + 1);
+      for (int j = 0; j <= i; j++) {
+        Integer leftAbove = 0;
+        if (j >= 0 && j < integers.size()) {
+          leftAbove = integers.get(j);
+        }
+        Integer rightAbove = 0;
+        int po = j - 1;
+        if (po >= 0 && po < integers.size()) {
+          rightAbove = integers.get(j - 1);
+        }
+        temp.add(leftAbove + rightAbove);
+      }
       list.add(temp);
-      return list;
-    }
-    if (numRows == 2) {
-      List<Integer> temp = new ArrayList<>(1);
-      temp.add(1);
-      temp.add(1);
-      list.add(temp);
-      return list;
     }
 
-    return null;
+    return list;
   }
 
   /**
