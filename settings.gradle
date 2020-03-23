@@ -1,1 +1,1 @@
-include ':app', ':algorithm', ':hook', ':component', ':common', ':design', ':javaRunnable'
+include ':app', ':algorithm', ':hook', ':component', ':common', ':design'
