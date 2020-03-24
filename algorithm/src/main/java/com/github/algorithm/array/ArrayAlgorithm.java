@@ -25,10 +25,10 @@ public class ArrayAlgorithm {
     //System.out.println("耗时：" + (System.currentTimeMillis() - l));
 
     int[] ss = new int[] {
-        1, 2, 3, 4, 4, 5, 5, 5
+        2, 3, 1, 2, 4, 3
     };
-    algorithm.removeDuplicates(ss);
-    System.out.println(Arrays.toString(ss));
+    int i = algorithm.minSubArrayLen(3, ss);
+    System.out.println(" ------> " + i);
   }
 
   /**
@@ -280,7 +280,56 @@ public class ArrayAlgorithm {
     return list;
   }
 
+  /**
+   * 给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。
+   *
+   * 示例:
+   *
+   * 输入: s = 7, nums = [2,3,1,2,4,3]
+   * 输出: 2
+   * 解释: 子数组 [4,3] 是该条件下的长度最小的连续子数组。
+   * 进阶:
+   *
+   * 如果你已经完成了O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。
+   *
+   * 题解：
+   * 快慢指针 k=0 j=0;
+   * 如果 total < target
+   * j++;
+   * 否则 k++
+   *
+   * 注意点：回退时，需要及时更新total的值(减去num[k])
+   */
   public int minSubArrayLen(int s, int[] nums) {
-    return 0;
+    if (nums.length == 0) {
+      return 0;
+    } else if (nums[0] >= s) {
+      return 1;
+    }
+
+    int total = nums[0];
+    int k = 0;
+    int j = 0;
+    int min = 0;
+
+    while (k <= j && j < nums.length) {
+      System.out.println("k=" + k + " , j=" + j +" , " + total);
+      if (total < s) {
+        j = j + 1;
+        if (j == nums.length) {
+          return min;
+        }
+        total += nums[j];
+      } else {
+        total -= nums[k];
+        if (min == 0) {
+          min = j - k + 1;
+        } else if (min > j - k + 1) {
+          min = j - k + 1;
+        }
+        k++;
+      }
+    }
+    return min;
   }
 }
