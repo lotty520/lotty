@@ -67,6 +67,14 @@
           android:textAllCaps="false"
           />
 
+      <Button
+          android:id="@+id/framealy"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="源码分析"
+          android:textAllCaps="false"
+          />
+
     </LinearLayout>
   </ScrollView>
 

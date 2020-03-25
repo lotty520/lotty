@@ -1,5 +1,6 @@
 package com.github.lotty;
 
+import android.app.IntentService;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class ClockAvtivity extends AppCompatActivity implements View.OnClickList
   };
 
   private EdgeSlideView slideView;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

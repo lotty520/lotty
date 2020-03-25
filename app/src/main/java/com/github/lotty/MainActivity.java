@@ -1,14 +1,13 @@
 package com.github.lotty;
 
-import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.github.common.Router;
+import com.github.frameworkaly.service.IntentServiceImpl;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,10 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     findViewById(R.id.component).setOnClickListener(this);
     findViewById(R.id.drawable).setOnClickListener(this);
     findViewById(R.id.animation).setOnClickListener(this);
-
-    WifiManager wifi = (WifiManager) MainActivity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-    Log.e("wh", "MainActivity 中通过 getApplicationContext() 获取 WifiManager hash" + wifi.hashCode());
-
+    findViewById(R.id.framealy).setOnClickListener(this);
   }
 
   @Override
@@ -48,6 +44,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         break;
       case R.id.animation:
         Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/animation")).go();
+        break;
+
+      case R.id.framealy:
+        Intent intent = new Intent(this.getApplicationContext(), IntentServiceImpl.class);
+        getApplicationContext().startService(intent);
         break;
       default:
         break;

@@ -14,10 +14,6 @@ public class App extends Application {
   public void onCreate() {
     super.onCreate();
     //RootHooker.init(this);
-
-
-    WifiManager wifi = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
-    Log.e("wh", "Application 中 WifiManager hash" + wifi.hashCode());
   }
 }
 

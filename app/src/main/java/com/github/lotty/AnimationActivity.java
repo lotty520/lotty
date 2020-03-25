@@ -17,6 +17,10 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
     mView = findViewById(R.id.object_view);
     findViewById(R.id.transition).setOnClickListener(this);
     findViewById(R.id.rotation).setOnClickListener(this);
+
+
+
+
   }
 
   @Override public void onClick(View v) {
