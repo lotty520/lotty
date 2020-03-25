@@ -2,7 +2,10 @@ package com.github.algorithm.array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * 数组相关算法
@@ -10,6 +13,19 @@ import java.util.List;
  * @author lotty
  */
 public class ArrayAlgorithm {
+
+  /**
+   * 给定一个非负索引 k，其中 k ≤ 33，返回杨辉三角的第 k 行。
+   *
+   * 题解：
+   * 递归获取每个位置的数值。
+   *
+   * 可以做缓存。。
+   */
+
+  private Map<String, Integer> cache = new HashMap<>();
+
+  private int maxIndex;
 
   public static void main(String[] args) {
     ArrayAlgorithm algorithm = new ArrayAlgorithm();
@@ -24,11 +40,15 @@ public class ArrayAlgorithm {
     //algorithm.rotate(ss, 19987);
     //System.out.println("耗时：" + (System.currentTimeMillis() - l));
 
-    int[] ss = new int[] {
-        2, 3, 1, 2, 4, 3
-    };
-    int i = algorithm.minSubArrayLen(3, ss);
-    System.out.println(" ------> " + i);
+    //int[] ss = new int[] {
+    //    2, 3, 1, 2, 4, 3
+    //};
+    //int i = algorithm.minSubArrayLen(3, ss);
+    //System.out.println("*** " + algorithm.reverseWords3("Let's take LeetCode contest") + " ***");
+    long l = System.currentTimeMillis();
+    List<Integer> row = algorithm.getRow(28);
+    System.out.println(row.toString());
+    System.out.println("耗时：" + (System.currentTimeMillis() - l));
   }
 
   /**
@@ -275,10 +295,28 @@ public class ArrayAlgorithm {
     }
   }
 
+  /**
+   * 打印杨辉三角第N行
+   *
+   * https://leetcode-cn.com/problems/pascals-triangle-ii/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by--28/
+   *
+   * 解决方案 空间复杂度O(K)
+   */
   public List<Integer> getRow(int rowIndex) {
-    List<Integer> list = new ArrayList<>();
-    return list;
+    int pre = 1;
+    List<Integer> cur = new ArrayList<>();
+    cur.add(1);
+    for (int i = 1; i <= rowIndex; i++) {
+      for (int j = 1; j < i; j++) {
+        int temp = cur.get(j);
+        cur.set(j, pre + cur.get(j));
+        pre = temp;
+      }
+      cur.add(1);
+    }
+    return cur;
   }
+
 
   /**
    * 给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。
@@ -313,7 +351,7 @@ public class ArrayAlgorithm {
     int min = 0;
 
     while (k <= j && j < nums.length) {
-      System.out.println("k=" + k + " , j=" + j +" , " + total);
+      System.out.println("k=" + k + " , j=" + j + " , " + total);
       if (total < s) {
         j = j + 1;
         if (j == nums.length) {
@@ -331,5 +369,103 @@ public class ArrayAlgorithm {
       }
     }
     return min;
+  }
+
+  /**
+   * 给定一个字符串，逐个翻转字符串中的每个单词。
+   *
+   *
+   *
+   * 示例 1：
+   *
+   * 输入: "the sky is blue"
+   * 输出: "blue is sky the"
+   * 示例 2：
+   *
+   * 输入: "  hello world!  "
+   * 输出: "world! hello"
+   * 解释: 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。
+   * 示例 3：
+   *
+   * 输入: "a good   example"
+   * 输出: "example good a"
+   * 解释: 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。
+   *
+   * 题解：
+   * 借助栈可以轻松实现。
+   *
+   * 1、即将入栈的元素为空格时
+   * a、栈为空时，继续循环
+   * b、否则，弹出栈中的元素
+   * 2、注意拼接中间的空格
+   * 3、注意删除末尾的空格
+   */
+  // TODO: 2020/3/24 该方法比较浪费空间
+  public String reverseWords(String s) {
+    Stack<Character> stack = new Stack<>();
+    int length = s.length();
+    StringBuilder ans = new StringBuilder(length);
+    for (int i = length - 1; i >= 0; i--) {
+      if (s.charAt(i) == ' ') {
+        if (!stack.empty()) {
+          while (!stack.empty()) {
+            ans.append(stack.pop());
+          }
+          ans.append(' ');
+        }
+      } else {
+        stack.push(s.charAt(i));
+      }
+    }
+    if (!stack.empty()) {
+      if (stack.peek() != ' ') {
+        while (!stack.empty()) {
+          ans.append(stack.pop());
+        }
+      }
+    }
+    String s1 = ans.toString();
+    if (s1.endsWith(" ")) {
+      s1 = s1.substring(0, s1.length() - 1);
+    }
+    return s1;
+  }
+
+  /**
+   * 给定一个字符串，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
+   *
+   * 示例:
+   *
+   * 输入: "Let's take LeetCode contest"
+   * 输出: "s'teL ekat edoCteeL tsetnoc"
+   * 注意：在字符串中，每个单词由单个空格分隔，并且字符串中不会有任何额外的空格。
+   *
+   * 题解：
+   *
+   * 倒序遍历
+   *
+   * 将每次查询到的完整字符添加到栈中
+   *
+   * 添加的字符由于是倒序遍历，所以添加到栈中也是倒序的。
+   *
+   * 结束后，将栈中字符pop出来。注意空格
+   */
+  public String reverseWords3(String s) {
+    Stack<String> stack = new Stack<>();
+    StringBuilder sb = new StringBuilder();
+    for (int i = s.length() - 1; i >= 0; i--) {
+      if (s.charAt(i) != ' ') {
+        sb.append(s.charAt(i));
+      } else {
+        stack.push(sb.toString());
+        stack.push(" ");
+        sb.delete(0, sb.length());
+      }
+    }
+    // 最后，第一个单词保存在sb中，直接拼接就可以
+    while (!stack.empty()) {
+      sb.append(stack.pop());
+    }
+    return sb.toString();
   }
 }
