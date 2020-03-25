@@ -12,31 +12,56 @@ package com.github.algorithm.list;
 public class MyLinkedList {
 
   private MyNode head;
-  private MyNode tail;
 
   /** Initialize your data structure here. */
   public MyLinkedList() {
+  }
 
-    head = null;
-    tail = head;
+  public static void main(String[] args) {
+    MyLinkedList mll = new MyLinkedList();
+    mll.addAtHead(1);
+    mll.print();
+
+    mll.addAtTail(3);
+    mll.print();
+
+    mll.addAtIndex(1, 2);
+    mll.print();
+
+    mll.get(1);
+    System.out.println("第1个: " + mll.get(1));
+
+    mll.deleteAtIndex(0);
+    System.out.println("删除第0个");
+
+    mll.print();
+    mll.get(0);
+    System.out.println("第0个: " + mll.get(0));
+  }
+
+  private void print() {
+    MyNode cursor = head;
+    while (cursor != null) {
+      System.out.print(cursor.value + " ");
+      cursor = cursor.next;
+    }
+    System.out.println("");
   }
 
   /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
   public int get(int index) {
-    if (index < 0) {
-      return 0;
-    } else {
-      int cur = 0;
-      MyNode curNode = head;
-      while (cur < index) {
-        if (curNode.next == null) {
-          return 0;
-        }
-        curNode = curNode.next;
-        cur++;
+    MyNode cur = head;
+    for (int i = 0; i < index; i++) {
+      if (cur != null) {
+        cur = cur.next;
+      } else {
+        return -1;
       }
-      return curNode.value;
     }
+    if (cur != null) {
+      return cur.value;
+    }
+    return -1;
   }
 
   /**
@@ -51,8 +76,14 @@ public class MyLinkedList {
   /** Append a node of value val to the last element of the linked list. */
   public void addAtTail(int val) {
     MyNode last = new MyNode(val, null);
-    tail.next = last;
-    tail = last;
+    if (head == null) {
+      head = last;
+    }
+    MyNode cur = head;
+    while (cur.next != null) {
+      cur = cur.next;
+    }
+    cur.next = last;
   }
 
   /**
@@ -61,46 +92,42 @@ public class MyLinkedList {
    * than the length, the node will not be inserted.
    */
   public void addAtIndex(int index, int val) {
-    if (index < 0) {
+    if (index == 0) {
+      addAtHead(val);
       return;
     }
-
-    int cur = 0;
-    MyNode curNode = head;
-    MyNode pre = null;
-    while (cur < index) {
-      if (curNode == null) {
-        return;
+    MyNode cur = head;
+    for (int i = 1; i < index; i++) {
+      if (cur != null) {
+        cur = cur.next;
       } else {
-        pre = curNode;
-        curNode = curNode.next;
-        cur++;
+        return;
       }
     }
-    if (pre == null) {
-      addAtHead(val);
-    } else if (curNode.next == null) {
-      addAtTail(val);
-    } else {
-      MyNode myNode = new MyNode(val, curNode);
-      pre.next = myNode;
+    if (cur != null) {
+      MyNode in = new MyNode(val, cur.next);
+      cur.next = in;
     }
   }
 
   /** Delete the index-th node in the linked list, if the index is valid. */
   public void deleteAtIndex(int index) {
-    int cur = 0;
-    MyNode curNode = head;
-    while (cur < index-1) {
-      if (curNode == null) {
+    if (index == 0) {
+      if (head != null) {
+        head = head.next;
+      }
+    }
+    MyNode cur = head;
+    for (int i = 1; i < index; i++) {
+      if (cur != null) {
+        cur = cur.next;
+      } else {
         return;
       }
-      curNode = curNode.next;
-      cur++;
     }
-    if (curNode.next != null) {
-      MyNode t = curNode.next;
-      curNode.next = t.next;
+    if (cur != null && cur.next != null) {
+      MyNode del = cur.next;
+      cur.next = del.next;
     }
   }
 
