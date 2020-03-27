@@ -3,6 +3,7 @@ package com.github.lotty;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    Log.e("wh","Main onCreate ");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     findViewById(R.id.algorithm).setOnClickListener(this);
@@ -22,6 +24,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     findViewById(R.id.drawable).setOnClickListener(this);
     findViewById(R.id.animation).setOnClickListener(this);
     findViewById(R.id.framealy).setOnClickListener(this);
+  }
+
+  @Override protected void onResume() {
+    Log.e("wh","Main onResume ");
+    super.onResume();
+  }
+
+  @Override protected void onPostResume() {
+    Log.e("wh","Main onPostResume ");
+    super.onPostResume();
   }
 
   @Override

@@ -42,8 +42,8 @@ public class DispatchView extends View {
   @Override
   public boolean onTouchEvent(MotionEvent event) {
     Log.e("wh", "View:onTouchEvent:" + ActionUtil.action(event.getAction()));
-    return true;
-    //return super.onTouchEvent(event);
+    //return true;
+    return super.onTouchEvent(event);
   }
 
 

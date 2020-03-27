@@ -37,10 +37,13 @@ public class CycleList {
     return false;
   }
 
+  /**
+   * 快慢指针。最中相遇则为环形链表
+   * @param head
+   * @return
+   */
   public ListNode detectCycle(ListNode head) {
-    if (head != null && head.next != null){
 
-    }
     return null;
   }
 
