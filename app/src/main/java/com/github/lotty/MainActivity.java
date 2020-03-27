@@ -9,12 +9,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.github.common.Router;
 import com.github.frameworkaly.service.IntentServiceImpl;
+import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    Log.e("wh","Main onCreate ");
+    Log.e("wh", "Main onCreate ");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     findViewById(R.id.algorithm).setOnClickListener(this);
@@ -27,13 +28,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   @Override protected void onResume() {
-    Log.e("wh","Main onResume ");
+    Log.e("wh", "Main onResume ");
     super.onResume();
   }
 
   @Override protected void onPostResume() {
-    Log.e("wh","Main onPostResume ");
+    Log.e("wh", "Main onPostResume ");
     super.onPostResume();
+
+    final CountDownLatch latch = new CountDownLatch(20000);
+
+    Thread run = new Thread(new Runnable() {
+      @Override public void run() {
+
+        try {
+          Log.e("wh","----打印的话，就已经运行");
+          // 阻塞，直到latch.getCount() == 0
+          latch.await();
+          Log.e("wh","----打印的话，就没有阻塞");
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+    });
+    run.start();
+
+    for (int i = 0; i < 200; i++) {
+      Thread thread = new Thread(new Runnable() {
+        @Override public void run() {
+          latch.countDown();
+        }
+      });
+      thread.start();
+    }
+
   }
 
   @Override
