@@ -15,7 +15,7 @@ public class App extends Application implements Choreographer.FrameCallback {
     //RootHooker.init(this);
 
     Choreographer choreographer = Choreographer.getInstance();
-    //choreographer.postFrameCallback(this);
+    choreographer.postFrameCallback(this);
   }
 
   @Override public void doFrame(long frameTimeNanos) {

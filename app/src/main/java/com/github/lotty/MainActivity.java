@@ -1,15 +1,23 @@
 package com.github.lotty;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.legacy.content.WakefulBroadcastReceiver;
 import com.github.common.Router;
+import com.github.frameworkaly.job.IJobService;
 import com.github.frameworkaly.service.IntentServiceImpl;
-import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,38 +38,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   @Override protected void onResume() {
     Log.e("wh", "Main onResume ");
     super.onResume();
+
+    PowerManager pw = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+    PowerManager.WakeLock wakeLock =
+        pw.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "lotty:MainActivity");
+    // 获取cpu唤醒锁，最多保持事件
+    wakeLock.acquire(3000);
+    // TODO: 2020/3/29 someThing todo
+
+    // 释放cpu唤醒锁
+    wakeLock.release();
+
   }
 
   @Override protected void onPostResume() {
     Log.e("wh", "Main onPostResume ");
     super.onPostResume();
+  }
 
-    final CountDownLatch latch = new CountDownLatch(20000);
-
-    Thread run = new Thread(new Runnable() {
-      @Override public void run() {
-
-        try {
-          Log.e("wh","----打印的话，就已经运行");
-          // 阻塞，直到latch.getCount() == 0
-          latch.await();
-          Log.e("wh","----打印的话，就没有阻塞");
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
-    });
-    run.start();
-
-    for (int i = 0; i < 200; i++) {
-      Thread thread = new Thread(new Runnable() {
-        @Override public void run() {
-          latch.countDown();
-        }
-      });
-      thread.start();
-    }
-
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP) public void deleverJob() {
+    JobScheduler js =
+        (JobScheduler) this.getBaseContext().getSystemService(Context.JOB_SCHEDULER_SERVICE);
+    JobInfo.Builder builder = new JobInfo.Builder(333, new ComponentName(this.getApplication(),
+        IJobService.class));
+    JobInfo build = builder.setMinimumLatency(1000).build();
+    js.schedule(build);
   }
 
   @Override
@@ -87,8 +88,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         break;
 
       case R.id.framealy:
-        Intent intent = new Intent(this.getApplicationContext(), IntentServiceImpl.class);
-        getApplicationContext().startService(intent);
+        //Intent intent = new Intent(this.getApplicationContext(), IntentServiceImpl.class);
+        //getApplicationContext().startService(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          deleverJob();
+        }
         break;
       default:
         break;

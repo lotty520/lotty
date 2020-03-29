@@ -124,6 +124,9 @@
     </activity>
 
     <service android:name="com.github.frameworkaly.service.IntentServiceImpl" />
+    <service
+        android:name="com.github.frameworkaly.job.IJobService"
+        android:permission="android.permission.BIND_JOB_SERVICE" />
   </application>
 
 </manifest>
