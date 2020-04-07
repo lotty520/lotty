@@ -1,14 +1,14 @@
 package com.github.lotty;
 
 import android.animation.ObjectAnimator;
-import android.app.IntentService;
-import android.app.job.JobScheduler;
 import android.os.Bundle;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.JobIntentService;
 
+/**
+ * @author lotty
+ */
 public class AnimationActivity extends AppCompatActivity implements View.OnClickListener {
 
   private View mView;
@@ -20,7 +20,6 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
     mView = findViewById(R.id.object_view);
     findViewById(R.id.transition).setOnClickListener(this);
     findViewById(R.id.rotation).setOnClickListener(this);
-
   }
 
   @Override public void onClick(View v) {

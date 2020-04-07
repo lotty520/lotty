@@ -6,6 +6,9 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.github.common.Router;
 
+/**
+ * @author lotty
+ */
 public class ComponentActivity extends AppCompatActivity implements View.OnClickListener {
 
   @Override

@@ -2,11 +2,13 @@ package com.github.lotty;
 
 import android.app.IntentService;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.github.component.list.EdgeSlideView;
 import java.util.Arrays;
+import java.util.HashSet;
 
 public class ClockAvtivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,6 +19,7 @@ public class ClockAvtivity extends AppCompatActivity implements View.OnClickList
   private static final String[] STRINGS_EX = {
       "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "#"
   };
+
 
   private EdgeSlideView slideView;
 
@@ -32,7 +35,7 @@ public class ClockAvtivity extends AppCompatActivity implements View.OnClickList
     //slideView = findViewById(R.id.component_slide);
 
     LocalBroadcastManager instance = LocalBroadcastManager.getInstance(this);
-    instance.registerReceiver(null,null);
+
   }
 
   @Override public void onClick(View v) {

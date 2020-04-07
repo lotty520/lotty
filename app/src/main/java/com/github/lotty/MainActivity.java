@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     PowerManager.WakeLock wakeLock =
         pw.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "lotty:MainActivity");
     // 获取cpu唤醒锁，最多保持事件
-    wakeLock.acquire(3000);
+    //wakeLock.acquire(3000);
     // TODO: 2020/3/29 someThing todo
 
     // 释放cpu唤醒锁
-    wakeLock.release();
+    //wakeLock.release();
 
   }
 
