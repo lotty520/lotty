@@ -4,7 +4,6 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,10 +13,8 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.legacy.content.WakefulBroadcastReceiver;
 import com.github.common.Router;
 import com.github.frameworkaly.job.IJobService;
-import com.github.frameworkaly.service.IntentServiceImpl;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 释放cpu唤醒锁
     //wakeLock.release();
-
   }
 
   @Override protected void onPostResume() {
@@ -97,5 +93,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       default:
         break;
     }
+
   }
 }
