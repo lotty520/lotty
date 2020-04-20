@@ -1,6 +1,7 @@
 package com.github.algorithm.tree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -88,6 +89,87 @@ class Solution {
       }
     }
     return false;
+  }
+
+  /**
+   * 从中序与后序遍历序列构造二叉树
+   *
+   * @param inorder 中序
+   * @param postorder 后序
+   */
+  public TreeNode buildTree1(int[] inorder, int[] postorder) {
+
+    int orderLen = inorder.length;
+    int postLen = postorder.length;
+    if (inorder.length==0){
+      return null;
+    }
+    // 根节点
+    int rootValue = postorder[postLen - 1];
+    TreeNode root = new TreeNode(rootValue);
+    if (postLen==1){
+      return root;
+    }
+    int index = -1;
+    for (int i = 0; i < orderLen; i++) {
+      if (inorder[i] == rootValue){
+        index = i;
+      }
+    }
+    if (index<0){
+      return root;
+    }
+    int[] inorderLeft = Arrays.copyOfRange(inorder, 0, index);
+    int[] inorderRight = Arrays.copyOfRange(inorder, index+1, orderLen);
+
+    int[] postLeft = Arrays.copyOfRange(postorder, 0, index);
+    int[] postRight = Arrays.copyOfRange(postorder, index, orderLen-1);
+
+    root.left = buildTree1(inorderLeft, postLeft);
+    root.right = buildTree1(inorderRight, postRight);
+    return root;
+  }
+
+  /**
+   * 前序遍历 preorder = [3,9,20,15,7]
+   * 中序遍历 inorder = [9,3,15,20,7]
+   * 返回如下的二叉树：
+   *
+   * 3
+   * / \
+   * 9  20
+   * /  \
+   * 15   7
+   */
+  public TreeNode buildTree(int[] preorder, int[] inorder) {
+    int len = preorder.length;
+    if (inorder.length == 0) {
+      return null;
+    }
+    // 根节点
+    int rootValue = preorder[0];
+    TreeNode root = new TreeNode(rootValue);
+    if (len == 1) {
+      return root;
+    }
+    int index = -1;
+    for (int i = 0; i < len; i++) {
+      if (inorder[i] == rootValue) {
+        index = i;
+      }
+    }
+    if (index < 0) {
+      return root;
+    }
+    int[] inorderLeft = Arrays.copyOfRange(inorder, 0, index);
+    int[] inorderRight = Arrays.copyOfRange(inorder, index + 1, len);
+
+    int[] preLeft = Arrays.copyOfRange(preorder, 1, index+1);
+    int[] preRight = Arrays.copyOfRange(preorder, index+1, len);
+
+    root.left = buildTree(preLeft,inorderLeft);
+    root.right = buildTree(preRight,inorderRight);
+    return root;
   }
 
   public static class TreeNode {
