@@ -4,7 +4,10 @@
 apply plugin: 'java-library'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+  implementation 'com.alibaba:fastjson:1.2.68'
+  implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+  implementation files('libs/sdklib.jar')
 }
 
 sourceCompatibility = "7"

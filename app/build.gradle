@@ -10,11 +10,43 @@ android {
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
   }
   buildTypes {
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  flavorDimensions "client","server"
+  productFlavors {
+    client1 {
+      dimension "client"
+      manifestPlaceholders = [
+          client:"client1"
+      ]
+    }
+
+    client2 {
+      dimension "client"
+      manifestPlaceholders = [
+          client:"client2"
+      ]
+    }
+
+    sever1 {
+      dimension "server"
+      manifestPlaceholders = [
+          channel:"server1"
+      ]
+    }
+
+    sever2 {
+      dimension "server"
+      manifestPlaceholders = [
+          channel:"server2"
+      ]
     }
   }
 }

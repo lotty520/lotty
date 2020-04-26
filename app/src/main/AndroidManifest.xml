@@ -127,6 +127,9 @@
     <service
         android:name="com.github.frameworkaly.job.IJobService"
         android:permission="android.permission.BIND_JOB_SERVICE" />
+
+    <meta-data android:name="channel" android:value="${channel}"/>
+    <meta-data android:name="client" android:value="${client}"/>
   </application>
 
 </manifest>
