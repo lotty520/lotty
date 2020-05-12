@@ -25,6 +25,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_edit);
     findViewById(R.id.edit_set_len_bt).setOnClickListener(this);
+    findViewById(R.id.edit_shown_bt).setOnClickListener(this);
     mLengthEt = findViewById(R.id.edit_input_len);
     mPwdEt = findViewById(R.id.edit_self);
   }
@@ -44,6 +45,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             nfe.printStackTrace();
           }
         }
+        break;
+      case R.id.edit_shown_bt:
+        Toast.makeText(this, mPwdEt.getText().toString(), Toast.LENGTH_SHORT).show();
         break;
       default:
         break;
