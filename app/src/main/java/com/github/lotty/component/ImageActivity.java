@@ -1,4 +1,4 @@
-package com.github.lotty;
+package com.github.lotty.component;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.github.component.image.XImageView;
+import com.github.lotty.R;
 
 public class ImageActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DispatchActivity">
+    tools:context=".component.DispatchActivity">
 
     <com.github.component.dispatch.DispatchParent
         android:layout_width="match_parent"

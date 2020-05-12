@@ -19,6 +19,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     findViewById(R.id.component_image).setOnClickListener(this);
     findViewById(R.id.component_dispatch).setOnClickListener(this);
     findViewById(R.id.component_clock).setOnClickListener(this);
+    findViewById(R.id.component_edit).setOnClickListener(this);
   }
 
   @Override public void onClick(View v) {
@@ -34,6 +35,9 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         break;
       case R.id.component_clock:
         Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/clock")).go();
+        break;
+      case R.id.component_edit:
+        Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/edit")).go();
         break;
       default:
         break;

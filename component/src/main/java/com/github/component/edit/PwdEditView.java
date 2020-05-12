@@ -3,10 +3,9 @@ package com.github.component.edit;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.text.Editable;
 import android.text.InputType;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.KeyEvent;
 
 /**
  * 实现一种类似支付确认页面输入支付密码的控件
@@ -17,12 +16,15 @@ import android.view.KeyEvent;
 public class PwdEditView extends androidx.appcompat.widget.AppCompatEditText {
 
   private final static int DEFAULT_INPUT_LENGTH = 6;
+  private final static int DEFAULT_RADIUS_SCALE = 6;
+  private final static int DEFAULT_STROKE_WIDTH = 2;
 
   private Paint mPaint;
 
-  private String currentText;
+  private int mTextLength = DEFAULT_INPUT_LENGTH;
 
-  private int mInputLength = DEFAULT_INPUT_LENGTH;
+  private int mElementW;
+  private int mDotRadius;
 
   public PwdEditView(Context context) {
     super(context);
@@ -39,8 +41,21 @@ public class PwdEditView extends androidx.appcompat.widget.AppCompatEditText {
     init();
   }
 
-  public void setInputLength(int len) {
-    mInputLength = len;
+  @Override
+  protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+    Editable editable = getText();
+    if (editable != null && editable.length() > mTextLength) {
+      editable.delete(mTextLength, editable.length());
+    }
+  }
+
+  public void setLength(int len) {
+    mTextLength = len;
+    Editable editable = getText();
+    if (editable != null && editable.length() > mTextLength) {
+      editable.delete(mTextLength, editable.length());
+    }
+    postInvalidate();
   }
 
   private void init() {
@@ -48,7 +63,7 @@ public class PwdEditView extends androidx.appcompat.widget.AppCompatEditText {
     mPaint.setStyle(Paint.Style.FILL);
     mPaint.setAntiAlias(true);
     mPaint.setColor(getCurrentTextColor());
-    mPaint.setStrokeWidth(2);
+    mPaint.setStrokeWidth(DEFAULT_STROKE_WIDTH);
     //设置背景为null，去掉下划线
     setBackground(null);
     // 设置文字带大小为0
@@ -58,60 +73,38 @@ public class PwdEditView extends androidx.appcompat.widget.AppCompatEditText {
     setCursorVisible(false);
   }
 
-  @Override public void setCursorVisible(boolean visible) {
-    // no op
-  }
-
   @Override public void setTextSize(float size) {
-    mPaint.setTextSize(size);
+    mPaint.setTextSize(0);
   }
 
   @Override public void setTextSize(int unit, float size) {
-    // TODO: 2020/4/7 no op
+    mPaint.setTextSize(0);
   }
 
   @Override public void setTextColor(int color) {
     mPaint.setColor(color);
   }
 
-  @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-    Log.e("wh", "onKeyDown: " + keyCode);
-    int length = getText().length();
-    if (length >= mInputLength) {
-      if (keyCode == KeyEvent.KEYCODE_DEL) {
-        return super.onKeyDown(keyCode, event);
-      }
-      return true;
-    }
-    return super.onKeyDown(keyCode, event);
-  }
-
   @Override protected void onDraw(Canvas canvas) {
-    super.onDraw(canvas);
     int height = getMeasuredHeight();
     int width = getMeasuredWidth();
-    int eleWidth = width / mInputLength;
-    int radius = eleWidth / 6;
-
+    mElementW = width / mTextLength;
+    mDotRadius = mElementW / DEFAULT_RADIUS_SCALE;
     // 绘制外边框
     canvas.drawLine(1, 1, width, 1, mPaint);
     canvas.drawLine(1, 1, 1, height - 1, mPaint);
     canvas.drawLine(width - 1, 1, width - 1, height - 1, mPaint);
     canvas.drawLine(1, height - 1, width, height - 1, mPaint);
-    // 绘制纵向分割线
-    for (int i = 1; i < mInputLength; i++) {
-      canvas.drawLine(eleWidth * i, 1, eleWidth * i, height - 1, mPaint);
+    for (int i = 1; i < mTextLength; i++) {
+      canvas.drawLine(mElementW * i, 1, mElementW * i, height - 1, mPaint);
     }
-    String content = getText().toString();
-    int length = content.length();
-    if (length >= mInputLength) {
-      length = mInputLength;
-      currentText = content.substring(0, mInputLength);
-    } else {
-      currentText = content;
-    }
-    for (int i = 0; i < length; i++) {
-      canvas.drawCircle(eleWidth * i + eleWidth / 2, height / 2, radius, mPaint);
+    Editable editable = getText();
+    if (editable != null) {
+      String content = editable.toString();
+      int length = content.length();
+      for (int i = 0; i < length; i++) {
+        canvas.drawCircle(mElementW * i + mElementW / 2F, height / 2F, mDotRadius, mPaint);
+      }
     }
   }
 }

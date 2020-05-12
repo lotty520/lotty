@@ -51,12 +51,11 @@
           android:text="时钟"
           />
 
-      <com.github.component.edit.PwdEditView
-          android:layout_width="300dp"
-          android:layout_height="60dp"
-          android:letterSpacing="1"
-          android:textColor="#1B66DC"
-          android:textSize="18dp"
+      <Button
+          android:id="@+id/component_edit"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="输入框"
           />
 
     </LinearLayout>

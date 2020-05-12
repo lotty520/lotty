@@ -17,19 +17,31 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-    <activity android:name=".ClockAvtivity">
+    <activity android:name=".component.EditActivity">
       <intent-filter>
         <action android:name="com.github.lotty.action.NAVIGATION" />
+
         <category android:name="android.intent.category.DEFAULT" />
+
+        <data
+            android:host="nav.github.com"
+            android:path="/lotty/edit"
+            android:scheme="https" />
+      </intent-filter>
+    </activity>
+    <activity android:name=".component.ClockAvtivity">
+      <intent-filter>
+        <action android:name="com.github.lotty.action.NAVIGATION" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+
         <data
             android:host="nav.github.com"
             android:path="/lotty/clock"
             android:scheme="https" />
       </intent-filter>
-
-    </activity>
-    <!-- Animation容器 -->
-    <activity android:name=".AnimationActivity">
+    </activity> <!-- Animation容器 -->
+    <activity android:name=".animation.AnimationActivity">
       <intent-filter>
         <action android:name="com.github.lotty.action.NAVIGATION" />
 
@@ -77,7 +89,7 @@
             android:scheme="https" />
       </intent-filter>
     </activity> <!-- 图片 -->
-    <activity android:name=".ImageActivity">
+    <activity android:name=".component.ImageActivity">
       <intent-filter>
         <action android:name="com.github.lotty.action.NAVIGATION" />
 
@@ -89,7 +101,7 @@
             android:scheme="https" />
       </intent-filter>
     </activity> <!-- 事件 -->
-    <activity android:name=".DispatchActivity">
+    <activity android:name=".component.DispatchActivity">
       <intent-filter>
         <action android:name="com.github.lotty.action.NAVIGATION" />
 
@@ -101,7 +113,7 @@
             android:scheme="https" />
       </intent-filter>
     </activity> <!-- 刷新 -->
-    <activity android:name=".SwipeActivity">
+    <activity android:name=".component.SwipeActivity">
       <intent-filter>
         <action android:name="com.github.lotty.action.NAVIGATION" />
 
@@ -112,8 +124,7 @@
             android:path="/lotty/swipe"
             android:scheme="https" />
       </intent-filter>
-    </activity>
-    <!-- 主页面 -->
+    </activity> <!-- 主页面 -->
     <activity android:name=".MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -128,8 +139,12 @@
         android:name="com.github.frameworkaly.job.IJobService"
         android:permission="android.permission.BIND_JOB_SERVICE" />
 
-    <meta-data android:name="channel" android:value="${channel}"/>
-    <meta-data android:name="client" android:value="${client}"/>
+    <meta-data
+        android:name="channel"
+        android:value="${channel}" />
+    <meta-data
+        android:name="client"
+        android:value="${client}" />
   </application>
 
 </manifest>

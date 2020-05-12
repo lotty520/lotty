@@ -1,4 +1,4 @@
-package com.github.lotty;
+package com.github.lotty.component;
 
 import android.app.IntentService;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.github.component.list.EdgeSlideView;
+import com.github.lotty.R;
 import java.util.Arrays;
 import java.util.HashSet;
 

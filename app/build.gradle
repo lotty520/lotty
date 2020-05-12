@@ -10,8 +10,8 @@ android {
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
   }
+
   buildTypes {
     release {
       minifyEnabled false
@@ -19,53 +19,52 @@ android {
     }
   }
 
-  flavorDimensions "client","server"
+  flavorDimensions "client", "server"
   productFlavors {
-    client1 {
+    client {
       dimension "client"
       manifestPlaceholders = [
-          client:"client1"
+          client: "client"
       ]
     }
 
-    client2 {
-      dimension "client"
-      manifestPlaceholders = [
-          client:"client2"
-      ]
-    }
-
-    sever1 {
+    sever {
       dimension "server"
       manifestPlaceholders = [
-          channel:"server1"
+          channel: "server"
       ]
+    }
+  }
+
+  applicationVariants.all {
+    va -> System.out.println("-- " + va.name)
+  }
+
+  buildOutputs.findAll {
+    ele -> System.out.println("-- " + ele.name)
+  }
+
+  dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.linkedin.dexmaker:dexmaker:+'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation('pub.devrel:easypermissions:2.0.0') {
+      exclude group: "com.android.support"
     }
 
-    sever2 {
-      dimension "server"
-      manifestPlaceholders = [
-          channel:"server2"
-      ]
-    }
+    implementation project(':algorithm')
+    implementation project(':hook')
+    implementation project(':component')
+    implementation project(':common')
+    implementation project(':frameworkaly')
   }
 }
 
 dependencies {
-  implementation fileTree(include: ['*.jar'], dir: 'libs')
-  implementation 'androidx.appcompat:appcompat:1.1.0'
-  implementation 'com.linkedin.dexmaker:dexmaker:+'
-  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-  testImplementation 'junit:junit:4.12'
-  androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-  implementation('pub.devrel:easypermissions:2.0.0') {
-    exclude group: "com.android.support"
-  }
-
-  implementation project(':algorithm')
-  implementation project(':hook')
-  implementation project(':component')
-  implementation project(':common')
-  implementation project(':frameworkaly')
+  implementation 'androidx.appcompat:appcompat:+'
+  implementation 'androidx.constraintlayout:constraintlayout:+'
 }

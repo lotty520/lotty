@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="48dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="48dp"
+    tools:context=".component.EditActivity"
+    >
+  <com.github.component.edit.PwdEditView
+      android:id="@+id/edit_self"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:textColor="#1B66DC"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <EditText
+      android:id="@+id/edit_input_len"
+      android:layout_width="match_parent"
+      android:layout_height="30dp"
+      android:layout_marginTop="20dp"
+      android:background="@drawable/app_edit_selector"
+      android:hint="输入密码框的长度"
+      android:inputType="number"
+      android:paddingStart="6dp"
+      android:textSize="14dp"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/edit_self"
+      />
+
+  <Button
+      android:id="@+id/edit_set_len_bt"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:text="设置密码框长度"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/edit_input_len"
+      />
+</androidx.constraintlayout.widget.ConstraintLayout>

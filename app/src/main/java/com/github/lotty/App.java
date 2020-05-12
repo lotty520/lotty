@@ -3,6 +3,7 @@ package com.github.lotty;
 import android.app.Application;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Choreographer;
 
@@ -27,6 +28,7 @@ public class App extends Application implements Choreographer.FrameCallback {
     } catch (PackageManager.NameNotFoundException e) {
       e.printStackTrace();
     }
+
   }
 
   @Override public void doFrame(long frameTimeNanos) {

@@ -1,9 +1,10 @@
-package com.github.lotty;
+package com.github.lotty.component;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.github.lotty.R;
 
 public class DispatchActivity extends AppCompatActivity {
 

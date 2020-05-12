@@ -1,10 +1,11 @@
-package com.github.lotty;
+package com.github.lotty.animation;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import com.github.lotty.R;
 
 /**
  * @author lotty
