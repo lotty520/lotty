@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.github.component.edit.PwdEditView;
 import com.github.lotty.R;
@@ -38,6 +39,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             if (realLength >= MIN_PWD_LEN && realLength <= MAX_PWD_LEN) {
               mPwdEt.setLength(realLength);
             }
+            Toast.makeText(this, "请输入介于4-8之间的数字", Toast.LENGTH_SHORT).show();
           } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
           }
