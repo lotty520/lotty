@@ -63,8 +63,3 @@ android {
     implementation project(':frameworkaly')
   }
 }
-
-dependencies {
-  implementation 'androidx.appcompat:appcompat:+'
-  implementation 'androidx.constraintlayout:constraintlayout:+'
-}

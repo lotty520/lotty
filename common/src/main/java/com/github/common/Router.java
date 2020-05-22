@@ -18,27 +18,27 @@ public class Router {
   private static final String ACTION_NAVIGATION = "com.github.lotty.action.NAVIGATION";
   private static final int NO_REQ_CODE = -1;
 
-  private Context mFrom;
-  private Class<? extends Activity> mToActivity;
+  private Context from;
+  private Class<? extends Activity> to;
 
-  private String mAction;
-  private Uri mUri;
+  private String action;
+  private Uri uri;
 
-  private Map<String, String> mData = new HashMap<>();
-  private Bundle mBundle;
-  private Bundle mOptions;
+  private Map<String, String> data = new HashMap<>();
+  private Bundle bundle;
+  private Bundle options;
 
-  private int mReqCode;
+  private int reqCode;
 
   private Router(Builder builder) {
-    mToActivity = builder.targetActivity;
-    mFrom = builder.from;
-    mAction = builder.action != null ? builder.action : ACTION_NAVIGATION;
-    mUri = builder.uri;
-    mData = builder.data;
-    mBundle = builder.bundle;
-    mOptions = builder.options;
-    mReqCode = builder.reqCode == 0 ? NO_REQ_CODE : builder.reqCode;
+    to = builder.targetActivity;
+    from = builder.from;
+    action = builder.action != null ? builder.action : ACTION_NAVIGATION;
+    uri = builder.uri;
+    data = builder.data;
+    bundle = builder.bundle;
+    options = builder.options;
+    reqCode = builder.reqCode == 0 ? NO_REQ_CODE : builder.reqCode;
   }
 
   /**
@@ -59,18 +59,18 @@ public class Router {
 
   private void go() {
     Intent intent = new Intent();
-    if (mToActivity != null) {
-      intent.setClass(mFrom, mToActivity);
+    if (to != null) {
+      intent.setClass(from, to);
     }
-    intent.setAction(mAction);
-    if (mUri != null) {
-      intent.setData(mUri);
+    intent.setAction(action);
+    if (uri != null) {
+      intent.setData(uri);
     }
-    if (mBundle != null) {
-      intent.putExtras(mBundle);
+    if (bundle != null) {
+      intent.putExtras(bundle);
     }
-    if (mData != null && !mData.isEmpty()) {
-      for (Map.Entry<String, String> entry : mData.entrySet()) {
+    if (data != null && !data.isEmpty()) {
+      for (Map.Entry<String, String> entry : data.entrySet()) {
         String key = entry.getKey();
         String value = entry.getValue();
         if (!TextUtils.isEmpty(key)) {
@@ -78,7 +78,7 @@ public class Router {
         }
       }
     }
-    if (mFrom instanceof Activity) {
+    if (from instanceof Activity) {
       startByActivity(intent);
     } else {
       startByContext(intent);
@@ -86,13 +86,13 @@ public class Router {
   }
 
   private void startByActivity(Intent intent) {
-    Activity from = (Activity) mFrom;
-    from.startActivityForResult(intent, mReqCode, mOptions);
+    Activity from = (Activity) this.from;
+    from.startActivityForResult(intent, reqCode, options);
   }
 
   private void startByContext(Intent intent) {
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mFrom.startActivity(intent, mOptions);
+    from.startActivity(intent, options);
   }
 
   public static class Builder {
