@@ -56,10 +56,14 @@ android {
       exclude group: "com.android.support"
     }
 
+    implementation 'com.tonystark.android:socket:latest.release'
+
     implementation project(':algorithm')
     implementation project(':hook')
     implementation project(':component')
     implementation project(':common')
     implementation project(':frameworkaly')
+
+
   }
 }

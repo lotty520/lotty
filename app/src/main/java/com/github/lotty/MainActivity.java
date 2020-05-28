@@ -17,12 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.common.Router;
 import com.github.frameworkaly.job.IJobService;
+import com.github.lotty.util.IpScanner;
+import com.github.lotty.util.SysUtil;
+import com.github.lotty.util.TaskCenter;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e("wh", "Main onCreate ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.algorithm).setOnClickListener(this);
@@ -32,17 +36,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.drawable).setOnClickListener(this);
         findViewById(R.id.animation).setOnClickListener(this);
         findViewById(R.id.framealy).setOnClickListener(this);
+        findViewById(R.id.link).setOnClickListener(this);
+        findViewById(R.id.mac).setOnClickListener(this);
+        findViewById(R.id.info).setOnClickListener(this);
+
+        TaskCenter.sharedCenter().setConnectedCallback(new OnServerConnectedCallback());
+        TaskCenter.sharedCenter().setReceivedCallback(new OnReceiveCallback());
+        TaskCenter.sharedCenter().setDisconnectedCallback(new OnServerDisconnectedCallback());
     }
 
     @Override
     protected void onPostResume() {
-        Log.e("wh", "Main onPostResume ");
         super.onPostResume();
     }
 
     @Override
     protected void onResume() {
-        Log.e("wh", "Main onResume ");
         super.onResume();
 
         PowerManager pw = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
@@ -77,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.animation:
                 Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/animation")).go();
                 break;
-
             case R.id.framealy:
                 //Intent intent = new Intent(this.getApplicationContext(), IntentServiceImpl.class);
                 //getApplicationContext().startService(intent);
@@ -85,6 +93,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     deleverJob();
                 }
                 break;
+            case R.id.link:
+                Log.e("wh", "------> connect");
+                TaskCenter.sharedCenter().connect("192.186.4.1", 8080);
+                break;
+            case R.id.mac:
+                IpScanner scanner = new IpScanner();
+                scanner.setOnScanListener(new IpScanner.OnScanListener() {
+                    @Override
+                    public void onScan(String mac) {
+                        Log.e("wh", mac);
+                    }
+                });
+                scanner.startScan();
+                break;
+            case R.id.info:
+                TaskCenter.sharedCenter().send(SysUtil.hex2Byte("3132333435"));
+                break;
+
             default:
                 break;
         }
@@ -99,5 +125,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 IJobService.class));
         JobInfo build = builder.setMinimumLatency(1000).build();
         js.schedule(build);
+    }
+
+
+    static class OnServerConnectedCallback implements TaskCenter.OnServerConnectedCallbackBlock {
+
+        @Override
+        public void callback() {
+            Log.e("wh", "建立连接");
+        }
+    }
+
+
+    static class OnServerDisconnectedCallback implements TaskCenter.OnServerDisconnectedCallbackBlock {
+
+        @Override
+        public void callback(IOException e) {
+            Log.e("wh", "断开连接");
+        }
+    }
+
+    static class OnReceiveCallback implements TaskCenter.OnReceiveCallbackBlock {
+        @Override
+        public void callback(String msg) {
+            Log.e("wh", msg + "");
+        }
     }
 }
