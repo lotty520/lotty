@@ -45,6 +45,7 @@ public class XImageView extends View {
     super.onDraw(canvas);
     if (mBitmap != null) {
       canvas.drawBitmap(mBitmap, 0, 0, null);
+      mBitmap.recycle();
     }
   }
 }

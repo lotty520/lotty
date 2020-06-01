@@ -25,6 +25,10 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private final static String HEX = "010300010025D5D1";
+    private final static String HEX_N = "010300010025";
+    private final static String HEX_READ = "010300010036941C";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.link:
-                Log.e("wh", "------> connect");
-                TaskCenter.sharedCenter().connect("192.186.4.1", 8080);
+                TaskCenter.sharedCenter().sendInstructions("192.186.4.1", 8080, SysUtil.hex2Byte(HEX));
                 break;
             case R.id.mac:
                 IpScanner scanner = new IpScanner();
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 scanner.startScan();
                 break;
             case R.id.info:
-                TaskCenter.sharedCenter().send(SysUtil.hex2Byte("3132333435"));
+                TaskCenter.sharedCenter().sendInstructions("192.186.4.1", 8080, SysUtil.hex2Byte(HEX));
                 break;
 
             default:
@@ -132,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public void callback() {
-            Log.e("wh", "建立连接");
+
         }
     }
 
