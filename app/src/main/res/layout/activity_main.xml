@@ -21,7 +21,7 @@
             android:orientation="vertical"
             android:paddingTop="12dp">
 
-            <Buttonz
+            <Button
                 android:id="@+id/grant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

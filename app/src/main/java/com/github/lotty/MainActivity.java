@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.github.common.Router;
 import com.github.frameworkaly.job.IJobService;
@@ -44,9 +47,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.mac).setOnClickListener(this);
         findViewById(R.id.info).setOnClickListener(this);
 
-        TaskCenter.sharedCenter().setConnectedCallback(new OnServerConnectedCallback());
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentTransaction.add(new Fragment(),"testFragment");
+        fragmentTransaction.commit();
+
         TaskCenter.sharedCenter().setReceivedCallback(new OnReceiveCallback());
         TaskCenter.sharedCenter().setDisconnectedCallback(new OnServerDisconnectedCallback());
+
     }
 
     @Override
@@ -57,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-
         PowerManager pw = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock =
                 pw.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "lotty:MainActivity");
@@ -67,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // 释放cpu唤醒锁
         //wakeLock.release();
+
     }
 
     @Override
