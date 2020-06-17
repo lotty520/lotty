@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Toast;
 
@@ -49,12 +50,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.add(new Fragment(),"testFragment");
+        fragmentTransaction.add(new Fragment(), "testFragment");
         fragmentTransaction.commit();
 
         TaskCenter.sharedCenter().setReceivedCallback(new OnReceiveCallback());
         TaskCenter.sharedCenter().setDisconnectedCallback(new OnServerDisconnectedCallback());
 
+        initOrientationDetect();
     }
 
     @Override
@@ -138,6 +140,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         js.schedule(build);
     }
 
+    private void initOrientationDetect() {
+        // 利用加速度传感器计算涉笔方向
+        OrientationEventListener listener = new OrientationEventListener(this) {
+            @Override
+            public void onOrientationChanged(int orientation) {
+            Log.e("wh","orientation: "+ orientation);
+            }
+        };
+        if (listener.canDetectOrientation()) {
+            listener.enable();
+        }
+    }
 
     static class OnServerConnectedCallback implements TaskCenter.OnServerConnectedCallbackBlock {
 
@@ -146,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
-
 
     static class OnServerDisconnectedCallback implements TaskCenter.OnServerDisconnectedCallbackBlock {
 
