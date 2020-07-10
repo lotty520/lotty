@@ -21,17 +21,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.github.common.Router;
 import com.github.frameworkaly.job.IJobService;
-import com.github.lotty.util.IpScanner;
-import com.github.lotty.util.SysUtil;
 import com.github.lotty.util.TaskCenter;
 
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final static String HEX = "010300010025D5D1";
-    private final static String HEX_N = "010300010025";
-    private final static String HEX_READ = "010300010036941C";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +39,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.drawable).setOnClickListener(this);
         findViewById(R.id.animation).setOnClickListener(this);
         findViewById(R.id.framealy).setOnClickListener(this);
-        findViewById(R.id.link).setOnClickListener(this);
-        findViewById(R.id.mac).setOnClickListener(this);
-        findViewById(R.id.info).setOnClickListener(this);
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
@@ -62,6 +54,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPostResume() {
         super.onPostResume();
+    }
+
+    private void initOrientationDetect() {
+        // 利用加速度传感器计算涉笔方向
+        OrientationEventListener listener = new OrientationEventListener(this) {
+            @Override
+            public void onOrientationChanged(int orientation) {
+                Log.e("wh", "orientation: " + orientation);
+            }
+        };
+        if (listener.canDetectOrientation()) {
+            listener.enable();
+        }
     }
 
     @Override
@@ -107,23 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     deleverJob();
                 }
                 break;
-            case R.id.link:
-                TaskCenter.sharedCenter().sendInstructions("192.186.4.1", 8080, SysUtil.hex2Byte(HEX));
-                break;
-            case R.id.mac:
-                IpScanner scanner = new IpScanner();
-                scanner.setOnScanListener(new IpScanner.OnScanListener() {
-                    @Override
-                    public void onScan(String mac) {
-                        Log.e("wh", mac);
-                    }
-                });
-                scanner.startScan();
-                break;
-            case R.id.info:
-                TaskCenter.sharedCenter().sendInstructions("192.186.4.1", 8080, SysUtil.hex2Byte(HEX));
-                break;
-
             default:
                 break;
         }
@@ -138,19 +126,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 IJobService.class));
         JobInfo build = builder.setMinimumLatency(1000).build();
         js.schedule(build);
-    }
-
-    private void initOrientationDetect() {
-        // 利用加速度传感器计算涉笔方向
-        OrientationEventListener listener = new OrientationEventListener(this) {
-            @Override
-            public void onOrientationChanged(int orientation) {
-            Log.e("wh","orientation: "+ orientation);
-            }
-        };
-        if (listener.canDetectOrientation()) {
-            listener.enable();
-        }
     }
 
     static class OnServerConnectedCallback implements TaskCenter.OnServerConnectedCallbackBlock {

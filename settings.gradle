@@ -1,3 +1,4 @@
+include ':mnn'
 include ':app', ':algorithm', ':hook', ':component', ':common', ':design'
 include ':frameworkaly'
 include ':player'
