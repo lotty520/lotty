@@ -21,6 +21,7 @@ public class TextFilter {
     }
 
     public static boolean check(String target) {
+        // TODO: 2020/7/14 应该将检测放在每次分词处，可以大幅度降低检测耗时
         boolean print = false;
         long start = System.currentTimeMillis();
         if (!init) {
