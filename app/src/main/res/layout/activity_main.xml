@@ -67,6 +67,13 @@
                 android:text="源码分析"
                 android:textAllCaps="false" />
 
+            <Button
+                android:id="@+id/security"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="内容安全"
+                android:textAllCaps="false" />
+
         </LinearLayout>
     </ScrollView>
 

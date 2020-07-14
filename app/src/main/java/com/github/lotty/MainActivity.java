@@ -25,6 +25,9 @@ import com.github.lotty.util.TaskCenter;
 
 import java.io.IOException;
 
+/**
+ * @author lotty
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.drawable).setOnClickListener(this);
         findViewById(R.id.animation).setOnClickListener(this);
         findViewById(R.id.framealy).setOnClickListener(this);
+        findViewById(R.id.security).setOnClickListener(this);
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
@@ -57,11 +61,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initOrientationDetect() {
-        // 利用加速度传感器计算涉笔方向
+        // 利用加速度传感器计算设备方向
         OrientationEventListener listener = new OrientationEventListener(this) {
             @Override
             public void onOrientationChanged(int orientation) {
-                Log.e("wh", "orientation: " + orientation);
             }
         };
         if (listener.canDetectOrientation()) {
@@ -111,6 +114,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     deleverJob();
                 }
+                break;
+            case R.id.security:
+                Router.from(this).uri(Uri.parse("https://nav.github.com/lotty/security")).go();
                 break;
             default:
                 break;

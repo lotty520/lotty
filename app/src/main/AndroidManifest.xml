@@ -29,7 +29,7 @@
             android:scheme="https" />
       </intent-filter>
     </activity>
-    <activity android:name=".component.ClockAvtivity">
+    <activity android:name=".component.ClockActivity">
       <intent-filter>
         <action android:name="com.github.lotty.action.NAVIGATION" />
 
@@ -139,6 +139,19 @@
         android:name="com.github.frameworkaly.job.IJobService"
         android:permission="android.permission.BIND_JOB_SERVICE" />
 
+      <!--文本检测-->
+      <activity android:name=".security.SecurityActivity">
+          <intent-filter>
+              <action android:name="com.github.lotty.action.NAVIGATION" />
+
+              <category android:name="android.intent.category.DEFAULT" />
+
+              <data
+                  android:host="nav.github.com"
+                  android:path="/lotty/security"
+                  android:scheme="https" />
+          </intent-filter>
+      </activity>
     <meta-data
         android:name="channel"
         android:value="${channel}" />

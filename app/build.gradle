@@ -61,7 +61,7 @@ android {
         implementation project(':component')
         implementation project(':common')
         implementation project(':frameworkaly')
-
+        implementation project(':security')
 
     }
 }
